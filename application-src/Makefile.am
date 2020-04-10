@@ -22,6 +22,8 @@ applicationexec_SCRIPTS_SHELL = script-fail
 applicationexec_SCRIPTS_PERL = script-email \
 	     amlog-script \
 	     ampgsql \
+		 amafs-backup \
+		 amafs-wrap \
 	     amzfs-sendrecv \
 	     amzfs-snapshot \
 	     amrandom \

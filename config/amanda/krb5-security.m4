@@ -7,7 +7,7 @@
 #   Handle configuration for KRB5 security, implementing the --with-krb5-security
 #   option.  If libraries are found, they are added to the relevant compiler flags.
 #
-#   Defines and substitutes KRB5_SECURITY, and sets AM_CONDITIONAL 
+#   Defines and substitutes KRB5_SECURITY, and sets AM_CONDITIONAL
 #   WANT_KRB5_SECURITY, if the user has selected this mechanism.  Also, the
 #   following parameters are taken from options, defined, and substituted:
 #
@@ -16,6 +16,8 @@ AC_DEFUN([AMANDA_KRB5_SECURITY],
     # Specify --with-krb5-security if Kerberos software is in somewhere
     # other than the listed KRB5_SPOTS.  We only compile kerberos support in
     # if the right files are there.
+
+    AC_PATH_PROG(PKG_CONFIG, pkg-config, [], $LOCSYSPATH:/opt/csw/bin:/usr/local/bin:/opt/local/bin)
 
     KRB5_SECURITY="no"
     : ${KRB5_SPOTS="/usr/kerberos /usr/cygnus /usr /opt/kerberos"}
@@ -28,13 +30,40 @@ AC_DEFUN([AMANDA_KRB5_SECURITY],
                 n | no) KRB5_SECURITY=no ;;
                 y | ye | yes) KRB5_SECURITY=yes ;;
                 *) KRB5_SPOTS="$KRB5_SECURITY"
-                   KRB5_SECURITY=yes
+                   KRB5_SECURITY=search
                    ;;
             esac
         ]
     )
 
     if test "x$KRB5_SECURITY" = "xyes"; then
+        AC_CHECK_HEADERS(`$PKG_CONFIG krb5 --variable=includedir`/krb5.h,,[KRB5_SECURITY=no],)
+
+        if test "x$KRB5_SECURITY" = "xyes"; then
+            krb5_ld_flags=`$PKG_CONFIG krb5 --libs-only-L 2>/dev/null`
+            krb5_lib_flags=`$PKG_CONFIG krb5 --libs-only-l --libs-only-other 2>/dev/null`
+            krb5_cppflags=`$PKG_CONFIG krb5 --cflags-only-I 2>/dev/null`
+            krb5_cflags=`$PKG_CONFIG krb5 --cflags-only-other 2>/dev/null`
+
+            AMANDA_ADD_LDFLAGS($krb5_ld_flags)
+            AMANDA_ADD_LIBS($krb5_lib_flags)
+            AMANDA_ADD_LIBS([-lgssapi_krb5])
+
+            AC_CHECK_LIB([krb5support], [k5_buf_status], [HAVE_KRB5_SUPPORT=yes], [HAVE_KRB5_SUPPORT=no])
+
+            if test "x$HAVE_KRB5_SUPPORT" = "xyes"; then
+                AMANDA_ADD_LIBS([-lkrb5support])
+            fi
+
+            AMANDA_ADD_CPPFLAGS($krb5_cppflags)
+            AMANDA_ADD_CFLAGS($krb5_cflags)
+
+            AC_DEFINE(KRB5_SECURITY,1,
+                [Define if Kerberos 5 security is to be enabled. ])
+        fi
+    elif test "x$KRB5_SECURITY" = "xsearch"; then
+        KRB5_SECURITY=yes
+
         # if found, force the static versions of these libs (.a) by linking directly
         # with the .a files.  I don't know how to get -R dependancies checked
         # in autoconf at this time. -kashmir

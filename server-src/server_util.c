@@ -416,7 +416,11 @@ run_server_script(
 	return;
     }
 
-    bsu = backup_support_option(plugin, &errarray);
+    bsu = backup_support_option(
+		plugin,
+		pp_script_get_property(pp_script),
+		&errarray);
+
     if (!bsu) {
         guint  i;
         for (i=0; i < errarray->len; i++) {
@@ -470,6 +474,7 @@ run_server_script(
     }
 
     property_add_to_argv(argv_ptr, pp_script_get_property(pp_script));
+
     g_ptr_array_add(argv_ptr, NULL);
 
     scripterr = fileno(stderr);

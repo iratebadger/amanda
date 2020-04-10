@@ -76,7 +76,10 @@ typedef struct backup_support_option_s {
     int want_server_backup_result;
 } backup_support_option_t;
 
-backup_support_option_t *backup_support_option(char       *program,
-					       GPtrArray **errarray);
+backup_support_option_t *
+backup_support_option(
+    char *program,
+    proplist_t proplist,
+	GPtrArray **errarray);
 
 #endif

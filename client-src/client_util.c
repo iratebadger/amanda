@@ -25,7 +25,7 @@
  * Authors: the Amanda Development Team.  Its members are listed in a
  * file named AUTHORS, in the root directory of this distribution.
  */
-/* 
+/*
  * $Id: client_util.c,v 1.34 2006/05/25 01:47:11 johnfranks Exp $
  *
  */
@@ -96,7 +96,7 @@ get_name(
 	number[0] = '\0';
     else
 	g_snprintf(number, sizeof(number), "%03d", n - 1);
-	
+
     filename = g_strjoin(NULL, get_pname(), ".", diskname, ".", ts, number, ".",
 			 exin, NULL);
     amfree(ts);
@@ -536,7 +536,7 @@ parse_options(
 	    dle->compprog = g_strdup(tok + sizeof("comp-cust=") -1);
 	    dle->compress = COMP_CUST;
 	    /* parse encryption options */
-	} 
+	}
 	else if (BSTRNCMP(tok, "encrypt-serv-cust=") == 0) {
 	    if (dle->encrypt != ENCRYPT_NONE) {
 		dbprintf(_("multiple encrypt option\n"));
@@ -547,7 +547,7 @@ parse_options(
 	    amfree(dle->srv_encrypt);
 	    dle->srv_encrypt = g_strdup(tok + sizeof("encrypt-serv-cust=") -1);
 	    dle->encrypt = ENCRYPT_SERV_CUST;
-	} 
+	}
 	else if (BSTRNCMP(tok, "encrypt-cust=") == 0) {
 	    if (dle->encrypt != ENCRYPT_NONE) {
 		dbprintf(_("multiple encrypt option\n"));
@@ -558,7 +558,7 @@ parse_options(
 	    amfree(dle->clnt_encrypt);
 	    dle->clnt_encrypt= g_strdup(tok + sizeof("encrypt-cust=") -1);
 	    dle->encrypt = ENCRYPT_CUST;
-	} 
+	}
 	else if (BSTRNCMP(tok, "server-decrypt-option=") == 0) {
 	  amfree(dle->srv_decrypt_opt);
 	  dle->srv_decrypt_opt = g_strdup(tok + sizeof("server-decrypt-option=") -1);
@@ -975,7 +975,11 @@ run_client_script(
     script->result->output = g_ptr_array_new();
     script->result->err = g_ptr_array_new();
 
-    bsu = backup_support_option(script->plugin, &errarray);
+    bsu = backup_support_option(
+		script->plugin,
+		script->property,
+		&errarray);
+
     if (!bsu) {
 	guint  i;
 	for (i=0; i < errarray->len; i++) {
@@ -1563,7 +1567,7 @@ check_access(
 	noun = "execute", adjective = "executable";
     else if((mode & (W_OK|R_OK)) == (W_OK|R_OK))
 	noun = "read/write", adjective = "read/writable";
-    else 
+    else
 	noun = "access", adjective = "accessible";
 
     if(EUIDACCESS(filename, mode) == -1) {

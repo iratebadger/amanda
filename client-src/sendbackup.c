@@ -25,7 +25,7 @@
  * Authors: the Amanda Development Team.  Its members are listed in a
  * file named AUTHORS, in the root directory of this distribution.
  */
-/* 
+/*
  * $Id: sendbackup.c,v 1.88 2006/07/25 18:27:56 martinea Exp $
  *
  * common code for the sendbackup-* programs.
@@ -166,9 +166,9 @@ main(
      *   1) Only set the message locale for now.
      *   2) Set textdomain for all amanda related programs to "amanda"
      *      We don't want to be forced to support dozens of message catalogs.
-     */  
+     */
     setlocale(LC_MESSAGES, "C");
-    textdomain("amanda"); 
+    textdomain("amanda");
 
     safe_fd(DATA_FD_OFFSET, DATA_FD_COUNT*2);
     openbsd_fd_inform();
@@ -699,8 +699,13 @@ main(
 	    }
 
 	    cur_dumptime = time(0);
-	    bsu = backup_support_option(dle->program, &errarray);
-	    if (!bsu) {
+
+	    bsu = backup_support_option(
+			dle->program,
+			dle->application_property,
+			&errarray);
+
+		if (!bsu) {
 		char  *errmsg;
 		char  *qerrmsg;
 		guint  i;

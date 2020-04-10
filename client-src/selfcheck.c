@@ -26,7 +26,7 @@
  *			   Computer Science Department
  *			   University of Maryland at College Park
  */
-/* 
+/*
  * $Id: selfcheck.c 10421 2008-03-06 18:48:30Z martineau $
  *
  * do self-check and send back any error messages
@@ -149,9 +149,9 @@ main(
      *   1) Only set the message locale for now.
      *   2) Set textdomain for all amanda related programs to "amanda"
      *      We don't want to be forced to support dozens of message catalogs.
-     */  
+     */
     setlocale(LC_MESSAGES, "C");
-    textdomain("amanda"); 
+    textdomain("amanda");
 
     safe_fd(-1, 0);
     openbsd_fd_inform();
@@ -899,7 +899,10 @@ check_disk(
 	int                      app_err[2];
 	GPtrArray               *errarray;
 
-	bsu = backup_support_option(dle->program, &errarray);
+	bsu = backup_support_option(
+		dle->program,
+		dle->application_property,
+		&errarray);
 
 	if (!bsu) {
 	    char  *line;

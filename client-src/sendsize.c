@@ -25,7 +25,7 @@
  * Authors: the Amanda Development Team.  Its members are listed in a
  * file named AUTHORS, in the root directory of this distribution.
  */
-/* 
+/*
  * $Id: sendsize.c 10421 2008-03-06 18:48:30Z martineau $
  *
  * send estimated backup sizes using dump
@@ -158,9 +158,9 @@ main(
      *   1) Only set the message locale for now.
      *   2) Set textdomain for all amanda related programs to "amanda"
      *      We don't want to be forced to support dozens of message catalogs.
-     */  
+     */
     setlocale(LC_MESSAGES, "C");
-    textdomain("amanda"); 
+    textdomain("amanda");
 
     safe_fd(-1, 0);
     openbsd_fd_inform();
@@ -783,7 +783,7 @@ calc_estimates(
 		if (estimate_method == ES_ES)
 		    estimate_method = ES_SERVER;
 	    }
-	    if (estimate == ES_CLIENT || 
+	    if (estimate == ES_CLIENT ||
 		(estimate == ES_CALCSIZE &&
 		 (est->dle->device[0] != '/' || est->dle->device[1] != '/'))) {
 		if (client_method == ES_ES)
@@ -868,7 +868,11 @@ application_api_calc_estimate(
     int            has_calcsize = 0;
     int            has_client = 0;
 
-    bsu = backup_support_option(est->dle->program, &errarray);
+    bsu = backup_support_option(
+		est->dle->program,
+		est->dle->application_property,
+		&errarray);
+
     if (!bsu) {
 	guint  i;
 	for (i=0; i < errarray->len; i++) {
@@ -942,7 +946,7 @@ application_api_calc_estimate(
 	    if (estimate_method == ES_ES)
 		estimate_method = ES_SERVER;
 	}
-	if ((estimate == ES_CLIENT && bsu->client_estimate) || 
+	if ((estimate == ES_CLIENT && bsu->client_estimate) ||
 	    (estimate == ES_CALCSIZE && bsu->calcsize)) {
 	    if (client_method == ES_ES)
 		client_method = estimate;
@@ -1373,7 +1377,7 @@ regex_scale_t re_size[] = {
 #ifdef VDUMP
     {"vdump: Dumping [0-9][0-9]* bytes, ", 1},		       /* OSF/1 vdump */
 #endif
-    
+
 #ifdef VXDUMP
     {"vxdump: estimated [0-9][0-9]* blocks", 512},	     /* HPUX's vxdump */
     {"  VXDUMP: estimated [0-9][0-9]* blocks", 512},		     /* Sinix */
@@ -1604,7 +1608,7 @@ getsize_dump(
 	aclose(nullfd);
 	return -1;
     default:
-	break; 
+	break;
     case 0:	/* child process */
 	if(SETPGRP == -1)
 	    SETPGRP_FAILED();
@@ -1974,7 +1978,7 @@ getsize_smbtar(
 	pw_fd_env = "dummy_PASSWD_FD";
     }
     dumppid = pipespawn(SAMBA_CLIENT, STDERR_PIPE|PASSWD_PIPE, 0,
-	      &nullfd, &nullfd, &pipefd, 
+	      &nullfd, &nullfd, &pipefd,
 	      pw_fd_env, &passwdfd,
 	      "smbclient",
 	      sharename,

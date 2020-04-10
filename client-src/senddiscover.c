@@ -268,7 +268,11 @@ main(
 	int        errfd[2];
 	FILE      *dumperr;
 
-	bsu = backup_support_option(dle->program, &errarray);
+	bsu = backup_support_option(
+		dle->program,
+		dle->application_property,
+		&errarray);
+
 	if (!bsu) {
 	    char  *errmsg;
 	    guint  i;
