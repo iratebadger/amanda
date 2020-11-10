@@ -650,7 +650,7 @@ add_extract_item(
 
     for (this = extract_list; this != NULL; this = this->next)
     {
-	/* see if this is the list for the tape */	
+	/* see if this is the list for the tape */
 	if (this->level == ditem->level && g_str_equal(this->tape,
                                                        ditem->tape))
 	{
@@ -727,7 +727,7 @@ delete_extract_item(
 
     for (this = extract_list; this != NULL; this = this->next)
     {
-	/* see if this is the list for the tape */	
+	/* see if this is the list for the tape */
 	if (this->level == ditem->level && g_str_equal(this->tape,
                                                        ditem->tape))
 	{
@@ -866,7 +866,7 @@ add_regex(
 	amfree(dir);
     }
 
-    if (result) { 
+    if (result) {
 	if ((s = validate_regexp(newregex)) != NULL) {
 	    g_printf(_("\"%s\" is not a valid regular expression: "), newregex);
 	    puts(s);
@@ -3260,8 +3260,10 @@ read_amidxtaped_data(
 
 	/* call backup_support_option */
 	if (g_str_equal(ctl_data->file.program, "APPLICATION")) {
-	    ctl_data->bsu = backup_support_option(ctl_data->file.application,
-						  &errarray);
+	    ctl_data->bsu = backup_support_option(
+							ctl_data->file.application,
+							NULL,
+							&errarray);
 	    if (!ctl_data->bsu) {
 		guint  i;
 		for (i=0; i < errarray->len; i++) {

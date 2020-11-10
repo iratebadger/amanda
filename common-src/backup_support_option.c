@@ -53,11 +53,12 @@ backup_support_option(
     cmd = g_strjoin(NULL, APPLICATION_DIR, "/", program, NULL);
     g_ptr_array_add(argv_ptr, g_strdup(program));
     g_ptr_array_add(argv_ptr, g_strdup("support"));
-    g_ptr_array_add(argv_ptr, NULL);
 
 	if(NULL != proplist) {
 		property_add_to_argv(argv_ptr, proplist);
 	}
+
+    g_ptr_array_add(argv_ptr, NULL);
 
     supporterr = fileno(stderr);
     supportpid = pipespawnv(cmd, STDIN_PIPE|STDOUT_PIPE|STDERR_PIPE, 0,

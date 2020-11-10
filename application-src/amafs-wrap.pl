@@ -23,6 +23,7 @@ use strict;
 use warnings;
 use Getopt::Long;
 use Symbol;
+use IPC::Open3;
 
 use Amanda::Debug qw( :logging );
 

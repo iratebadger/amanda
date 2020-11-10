@@ -37,7 +37,7 @@ use Amanda::Constants;
 sub new {
     my $class = shift @_;
 
-    my ($execute_where
+    my ($execute_where,
         $config,
         $host,
         $disk,
@@ -149,18 +149,48 @@ sub afs_end {
 sub afs_mount {
     my $self = shift;
 
-    #Mount the volume in the backup area.
-    my $cmd = "fs mkmount -dir " . $self->{target}
-                        . " -vol " . $self->{volume} . '.backup'
-                        . " -cell " . $self->{cell};
-
     my($wtr, $rdr, $err, $pid);
+
+    my $cmd = "vos backup -id $self->{volume} -cell $self->{cell}";
+
     $err = Symbol::gensym;
     $pid = open3($wtr, $rdr, $err, $cmd);
     close $wtr;
     waitpid $pid, 0;
     close $rdr;
     close $err;
+
+    $? == 0
+        or $self->print_to_server_and_die(
+            "Failed to create backup for volime $self->{volume}.",
+            $Amanda::Script_App::ERROR);
+
+
+    $cmd = "fs checkvolumes";
+
+    $err = Symbol::gensym;
+    $pid = open3($wtr, $rdr, $err, $cmd);
+    close $wtr;
+    waitpid $pid, 0;
+    close $rdr;
+    close $err;
+
+    #Mount the volume in the backup area.
+    my $cmd = "fs mkmount -dir " . $self->{target}
+                        . " -vol " . $self->{volume} . '.backup'
+                        . " -cell " . $self->{cell};
+
+    $err = Symbol::gensym;
+    $pid = open3($wtr, $rdr, $err, $cmd);
+    close $wtr;
+    waitpid $pid, 0;
+    close $rdr;
+    close $err;
+
+    $? == 0
+        or $self->print_to_server_and_die(
+            "Failed to mount backup for volime $self->{volume}.",
+            $Amanda::Script_App::ERROR);
 }
 
 sub afs_umount {
@@ -261,7 +291,9 @@ sub command_pre_dle_estimate {
 }
 
 sub command_post_dle_estimate {
-    my $self->amfs_setup();
+    my $self = shift;
+
+    $self->amfs_setup();
 
     if ($self->{error_status} == $Amanda::Script_App::GOOD) {
         $self->afs_begin();
@@ -285,7 +317,9 @@ sub command_pre_dle_backup {
 }
 
 sub command_post_dle_backup {
-    my  $self->amfs_setup();
+    my $self = shift;
+
+    $self->amfs_setup();
 
     if ($self->{error_status} == $Amanda::Script_App::GOOD) {
         $self->afs_begin();
