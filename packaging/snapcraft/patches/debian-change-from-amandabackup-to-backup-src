@@ -1,0 +1,42 @@
+Subject: Change user from amandabackup to backup
+From: Bdale Garbee <bdale@gag.com>
+
+Index: amanda.git/installcheck/Amanda_Config.pl
+===================================================================
+--- amanda.git.orig/installcheck/Amanda_Config.pl	2017-10-07 20:36:36.938031460 +0100
++++ amanda.git/installcheck/Amanda_Config.pl	2017-10-07 20:36:36.934031448 +0100
+@@ -216,7 +216,7 @@ $testconf->add_script('my_script', [
+   'plugin' => '"script-email"',
+   'execute-on' => 'pre-host-backup, post-host-backup',
+   'execute-where' => 'client',
+-  'property' => '"mailto" "amandabackup" "amanda"',
++  'property' => '"mailto" "backup" "amanda"',
+ ]);
+ $testconf->add_device('my_device', [
+   'comment' => '"my device is mine, not yours"',
+Index: amanda.git/installcheck/catalogs/chunker-partial.cat
+===================================================================
+--- amanda.git.orig/installcheck/catalogs/chunker-partial.cat	2017-10-07 20:36:36.938031460 +0100
++++ amanda.git/installcheck/catalogs/chunker-partial.cat	2017-10-07 20:36:36.934031448 +0100
+@@ -28,7 +28,7 @@ planner:        DEFAULT_TAPE_SERVER="loc
+ planner:        HAVE_MMAP NEED_STRSTR HAVE_SYSVSHM AMFLOCK_POSIX AMFLOCK_LOCKF
+ planner:        AMFLOCK_LNLOCK SETPGRP_VOID ASSERTIONS AMANDA_DEBUG_DAYS=4
+ planner:        BSD_SECURITY RSH_SECURITY USE_AMANDAHOSTS
+-planner:        CLIENT_LOGIN="amandabackup" CHECK_USERID HAVE_GZIP
++planner:        CLIENT_LOGIN="backup" CHECK_USERID HAVE_GZIP
+ planner:        COMPRESS_SUFFIX=".gz" COMPRESS_FAST_OPT="--fast"
+ planner:        COMPRESS_BEST_OPT="--best" UNCOMPRESS_OPT="-dc"
+ READING CONF INFO...
+Index: amanda.git/installcheck/catalogs/taper-parallel-write.cat
+===================================================================
+--- amanda.git.orig/installcheck/catalogs/taper-parallel-write.cat	2017-10-07 20:36:36.938031460 +0100
++++ amanda.git/installcheck/catalogs/taper-parallel-write.cat	2017-10-07 20:36:36.934031448 +0100
+@@ -26,7 +26,7 @@ planner: defs:  DEFAULT_SERVER="localhos
+ planner:        DEFAULT_TAPE_SERVER="localhost" DEFAULT_TAPE_DEVICE=""
+ planner:        NEED_STRSTR AMFLOCK_POSIX AMFLOCK_FLOCK AMFLOCK_LOCKF
+ planner:        AMFLOCK_LNLOCK SETPGRP_VOID ASSERTIONS AMANDA_DEBUG_DAYS=4
+-planner:        BSD_SECURITY USE_AMANDAHOSTS CLIENT_LOGIN="amandabackup"
++planner:        BSD_SECURITY USE_AMANDAHOSTS CLIENT_LOGIN="backup"
+ planner:        CHECK_USERID HAVE_GZIP COMPRESS_SUFFIX=".gz"
+ planner:        COMPRESS_FAST_OPT="--fast" COMPRESS_BEST_OPT="--best"
+ planner:        UNCOMPRESS_OPT="-dc"

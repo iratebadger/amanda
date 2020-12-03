@@ -388,7 +388,7 @@ connect_wait_callback(
 
 
 /*
- * Does a one pass protocol sweep.  Handles any incoming packets that 
+ * Does a one pass protocol sweep.  Handles any incoming packets that
  * are waiting to be processed, and then deals with any pending
  * requests that have timed out.
  *
@@ -400,6 +400,8 @@ protocol_check(void)
 {
 
     /* arg == 1 means don't block */
+    /* doing it two times allow to send the REQ packet immediately */
+    event_loop(1);
     event_loop(1);
 }
 
@@ -606,7 +608,7 @@ s_sendreq(
  *
  *  - the caller has received a packet, located the request for
  *    that packet, and called us with an action of PA_RCVDATA.
- *    
+ *
  *  - the caller has determined that a request has timed out,
  *    and has called us with PA_TIMEOUT.
  *

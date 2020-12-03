@@ -1,0 +1,68 @@
+Description: make dumpdates path in docs match Debian configuration
+Author: Bdale Garbee <bdale@gag.com>
+
+Index: amanda.git/man/amanda.conf.5
+===================================================================
+--- amanda.git.orig/man/amanda.conf.5	2017-12-15 15:44:58.033998132 +0000
++++ amanda.git/man/amanda.conf.5	2017-12-15 15:44:58.029998129 +0000
+@@ -1842,7 +1842,7 @@ if the property must be kept secret\&.
+ .RS 4
+ Default:
+ \fByes\fR\&. Whether to ask the backup program to update its database (e\&.g\&.
+-/etc/dumpdates
++/var/lib/dumpdates
+ for DUMP or
+ /usr/local/var/amanda/gnutar\-lists
+ for GNUTAR) of time stamps\&. This is normally enabled for daily backups and turned off for periodic archival runs\&.
+Index: amanda.git/man/disklist.5
+===================================================================
+--- amanda.git.orig/man/disklist.5	2017-12-15 15:44:58.033998132 +0000
++++ amanda.git/man/disklist.5	2017-12-15 15:44:58.029998129 +0000
+@@ -110,7 +110,7 @@ defined in the
+ \fBamanda\&.conf\fR
+ file\&.
+ \fIDumptype\fRs specify backup related parameters, such as whether to compress the backups, whether to record backup results in
+-/etc/dumpdates, the disk\*(Aqs relative priority, etc\&.
++/var/lib/dumpdates, the disk\*(Aqs relative priority, etc\&.
+ .RE
+ .PP
+ \fIspindle\fR
+Index: amanda.git/man/entities/global.entities.in
+===================================================================
+--- amanda.git.orig/man/entities/global.entities.in	2017-12-15 15:44:58.033998132 +0000
++++ amanda.git/man/entities/global.entities.in	2017-12-15 15:44:58.029998129 +0000
+@@ -99,7 +99,7 @@
+ <!ENTITY tapelist '<manref name="tapelist" vol="5"/>'>
+ 
+ <!-- IDs for files used by AMANDA-->
+-<!ENTITY dumpdates '<filename>/etc/dumpdates</filename>'>
++<!ENTITY dumpdates '<filename>/var/lib/dumpdates</filename>'>
+ 
+ <!-- IDs for AMANDA commands-->
+ <!ENTITY amadmin ' <command>amadmin</command>'>
+Index: amanda.git/man/xml-source/disklist.5.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/disklist.5.xml	2017-12-15 15:44:58.033998132 +0000
++++ amanda.git/man/xml-source/disklist.5.xml	2017-12-15 15:44:58.029998129 +0000
+@@ -129,7 +129,7 @@ file.
+ specify backup related parameters,
+ such as whether to compress the backups,
+ whether to record backup results in
+-<filename>/etc/dumpdates</filename>, the disk's relative priority, etc.</para>
++<filename>/var/lib/dumpdates</filename>, the disk's relative priority, etc.</para>
+   </listitem>
+   </varlistentry>
+   <varlistentry>
+Index: amanda.git/man/xml-source/amanda.conf.5.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amanda.conf.5.xml	2017-12-15 15:44:58.033998132 +0000
++++ amanda.git/man/xml-source/amanda.conf.5.xml	2017-12-15 15:44:58.029998129 +0000
+@@ -2387,7 +2387,7 @@ must be kept secret.
+   <listitem>
+ <para>Default:
+ <amkeyword>yes</amkeyword>.
+-Whether to ask the backup program to update its database (e.g. <filename>/etc/dumpdates</filename>
++Whether to ask the backup program to update its database (e.g. <filename>/var/lib/dumpdates</filename>
+ for DUMP or <filename>/usr/local/var/amanda/gnutar-lists</filename> for GNUTAR) of time stamps.
+ This is normally enabled for daily backups and turned off for periodic archival runs.</para>
+   </listitem>

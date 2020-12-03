@@ -1,0 +1,482 @@
+Subject: Change user from amandabackup to backup
+From: Bdale Garbee <bdale@gag.com>
+
+Index: amanda.git/man/amaddclient.8
+===================================================================
+--- amanda.git.orig/man/amaddclient.8	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/amaddclient.8	2017-10-07 20:36:43.022050554 +0100
+@@ -55,7 +55,7 @@ ssh\-add(1)
+ for detail\&.)
+ .PP
+ \fBamaddclient\fR
+-must be run by user amandabackup\&.
++must be run by user backup\&.
+ .PP
+ \-\-config, \-\-client and \-\-diskdev must be specified\&.
+ .SH "OPTIONS"
+@@ -171,7 +171,7 @@ Amanda configuration template files inst
+ .PP
+ \fB/var/lib/amanda\fR
+ .RS 4
+-amandabackup home directory
++backup home directory
+ .RE
+ .PP
+ \fB/var/lib/amanda/\&.amandahosts\fR
+Index: amanda.git/man/amanda-auth.7
+===================================================================
+--- amanda.git.orig/man/amanda-auth.7	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/amanda-auth.7	2017-10-07 20:36:43.030050579 +0100
+@@ -118,7 +118,7 @@ parameter selects a communication/authen
+ .PP
+ When Amanda is built, a username is specified with the
+ \fB\-\-with\-user\fR
+-option\&. Most Amanda processes run under this user\*(Aqs identity, to minimize security risks\&. In binary distributions, this username is usually one of \*(Aqamanda\*(Aq, \*(Aqamandabackup\*(Aq, or \*(Aqbackup\*(Aq\&. The examples below use \*(Aqamandabackup\*(Aq since it is unambiguous\&. You may need to adjust accordingly for your system\&.
++option\&. Most Amanda processes run under this user\*(Aqs identity, to minimize security risks\&. In binary distributions, this username is usually one of \*(Aqamanda\*(Aq, \*(Aqbackup\*(Aq, or \*(Aqbackup\*(Aq\&. The examples below use \*(Aqbackup\*(Aq since it is unambiguous\&. You may need to adjust accordingly for your system\&.
+ .SS "Authenticated Peer Hostnames"
+ .PP
+ Amanda\*(Aqs authentication mechanisms provide an authenticated hostname of the system on the other end of the connection, which is used to restrict access to only particular hosts\&. The degree of "authentication" performed on this hostname varies with the authentication mechanism, and is discussed below\&.
+@@ -186,10 +186,10 @@ If service is omitted, it defaults to
+ (which is equivalent to
+ \fBamdump\fR)\&.
+ .PP
+-Example of the \&.amandahosts file on an Amanda client, where \*(Aqamandabackup\*(Aq is the Amanda dumpuser\&.
++Example of the \&.amandahosts file on an Amanda client, where \*(Aqbackup\*(Aq is the Amanda dumpuser\&.
+ .sp
+ .nf
+-    \fBamandaserver\&.example\&.com   amandabackup   amdump\fR
++    \fBamandaserver\&.example\&.com   backup   amdump\fR
+ .fi
+ .PP
+ Example of the \&.amandahosts file on an Amanda server
+@@ -205,7 +205,7 @@ The authentication is done using \&.aman
+ The authentication is done using \&.amandahosts files in the Amanda user\*(Aqs home directory\&. It uses UDP protocol between Amanda server and client for data and hence the number of DLEs is limited by the UDP packet size\&. It uses one TCP port to establish the connection and multiplexes all data streams using one port on the server (see PORT USAGE below)\&.
+ .SS "bsdtcp communication and authentication"
+ .PP
+-The authentication is done using \&.amandahosts files in the backup user\*(Aqs (for example: amandabackup) home directory\&. It uses TCP protocol between Amanda server and client\&. On the client, two reserved ports are used\&. On the server, all data streams are multiplexed to one port (see PORT USAGE below)\&.
++The authentication is done using \&.amandahosts files in the backup user\*(Aqs (for example: backup) home directory\&. It uses TCP protocol between Amanda server and client\&. On the client, two reserved ports are used\&. On the server, all data streams are multiplexed to one port (see PORT USAGE below)\&.
+ .SS "USING INETD SERVER"
+ .PP
+ Template for Amanda client inetd service entry
+@@ -216,10 +216,10 @@ Template for Amanda client inetd service
+ .PP
+ Client example of using
+ \fBbsd\fR
+-authorization for inetd server given Amanda user is "amandabackup":
++authorization for inetd server given Amanda user is "backup":
+ .sp
+ .nf
+-\fB   amanda dgram udp wait amandabackup /path/to/amandad amandad \-auth=bsd amdump\fR
++\fB   amanda dgram udp wait backup /path/to/amandad amandad \-auth=bsd amdump\fR
+ .fi
+ .PP
+ The same could be used for
+@@ -228,10 +228,10 @@ if specifying \-auth=bsdudp instead of \
+ .PP
+ Client example of using
+ \fBbsdtcp\fR
+-authorization for inetd server given Amanda user is "amandabackup":
++authorization for inetd server given Amanda user is "backup":
+ .sp
+ .nf
+-\fB   amanda stream tcp nowait amandabackup /path/to/amandad amandad \-auth=bsdtcp amdump\fR
++\fB   amanda stream tcp nowait backup /path/to/amandad amandad \-auth=bsdtcp amdump\fR
+ .fi
+ .PP
+ \fBamindexd\fR
+@@ -243,10 +243,10 @@ server arguments for an Amanda server\&.
+ .PP
+ Server example of using
+ \fBbsdtcp\fR
+-authorization for inetd server given Amanda user is "amandabackup":
++authorization for inetd server given Amanda user is "backup":
+ .sp
+ .nf
+-\fB   amanda stream tcp nowait amandabackup /path/to/amandad amandad \-auth=bsdtcp amdump amindexd amidxtaped\fR
++\fB   amanda stream tcp nowait backup /path/to/amandad amandad \-auth=bsdtcp amdump amindexd amidxtaped\fR
+ .fi
+ .PP
+ For Amanda version 2\&.5\&.0 and earlier, remember that neither
+@@ -280,8 +280,8 @@ instead and, again, the server must be r
+ Example of amindexd and amidxtaped Amanda daemon services configured as their own network services for a 2\&.5\&.0 or earlier server or a newer server having 2\&.5\&.0 or earlier clients
+ .sp
+ .nf
+-\fB   amandaidx stream tcp nowait amandabackup /usr/local/libexec/amanda/current/amindexd   amindexd\fR
+-\fB   amidxtape stream tcp nowait amandabackup /usr/local/libexec/amanda/current/amidxtaped amidxtaped\fR
++\fB   amandaidx stream tcp nowait backup /usr/local/libexec/amanda/current/amindexd   amindexd\fR
++\fB   amidxtape stream tcp nowait backup /usr/local/libexec/amanda/current/amidxtaped amidxtaped\fR
+ .fi
+ .SS "USING XINETD SERVER"
+ .PP
+@@ -309,7 +309,7 @@ parameter can be used with xinetd but is
+ .PP
+ Client example of using
+ \fBbsd\fR
+-authorization for xinetd server and for Amanda user "amandabackup":
++authorization for xinetd server and for Amanda user "backup":
+ .sp
+ .nf
+ service amanda
+@@ -318,7 +318,7 @@ service amanda
+ 	socket_type     = dgram
+ 	protocol        = udp
+ 	wait            = yes
+-	user            = amandabackup
++	user            = backup
+ 	group           = disk
+ 	groups          = yes
+ 	server          = /path/to/amandad
+@@ -333,7 +333,7 @@ if specifying \-auth=bsdudp instead of \
+ .PP
+ Client example of using
+ \fBbsdtcp\fR
+-authorization for xinetd server and for Amanda user "amandabackup":
++authorization for xinetd server and for Amanda user "backup":
+ .sp
+ .nf
+ service amanda
+@@ -342,7 +342,7 @@ service amanda
+ 	socket_type     = stream
+ 	protocol        = tcp
+ 	wait            = no
+-	user            = amandabackup
++	user            = backup
+ 	group           = disk
+ 	groups          = yes
+ 	server          = /path/to/amandad
+@@ -590,7 +590,7 @@ For example:
+ define dumptype rsh_example {
+          \&.\&.\&.
+          auth "rsh"
+-         client\-username "amandabackup"
++         client\-username "backup"
+          amandad\-path "/usr/lib/exec/amandad"
+          \&.\&.\&.
+ }
+@@ -621,7 +621,7 @@ option in all DLEs for that host by addi
+ .sp
+ .nf
+   auth "ssh"
+-  ssh\-keys "/home/amandabackup/\&.ssh/id_rsa_amdump"
++  ssh\-keys "/home/backup/\&.ssh/id_rsa_amdump"
+ .fi
+ .PP
+ \fBssh\-keys\fR
+Index: amanda.git/man/amgpgcrypt.8
+===================================================================
+--- amanda.git.orig/man/amgpgcrypt.8	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/amgpgcrypt.8	2017-10-07 20:36:43.034050592 +0100
+@@ -95,11 +95,11 @@ You need a User\-ID to identify your key
+ from Real Name, Comment and Email Address in this form:
+     "Heinrich Heine (Der Dichter) (heinrichh@duesseldorf\&.de)"
+ 
+-Real name: amandabackup
++Real name: backup
+ Email address:
+-Comment: gpg keys for amandabackup
++Comment: gpg keys for backup
+ You selected this USER\-ID:
+-    "amandabackup (gpg keys for amandabackup)"
++    "backup (gpg keys for backup)"
+ 
+ Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+ You need a Passphrase to protect your secret key\&.
+@@ -117,7 +117,7 @@ generator a better chance to gain enough
+ public and secret key created and signed\&.
+ key marked as ultimately trusted\&.
+ 
+-pub  1024D/4417A8CB 2006\-02\-07 amandabackup (gpg keys for amandabackup)
++pub  1024D/4417A8CB 2006\-02\-07 backup (gpg keys for backup)
+      Key fingerprint = 139C 6369 44FC 7F1A 655C  E5E9 7EAA 515A 4417 A8CB
+ sub  1024g/8C3A6A78 2006\-02\-07 [expires: 2006\-08\-06]
+ .fi
+Index: amanda.git/man/amserverconfig.8
+===================================================================
+--- amanda.git.orig/man/amserverconfig.8	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/amserverconfig.8	2017-10-07 20:36:43.034050592 +0100
+@@ -40,7 +40,7 @@ will setup initial Amanda configuration
+ \fBamserverconfig\fR
+ does not change existing Amanda configurations\&.
+ \fBamserverconfig\fR
+-must be run by user amandabackup\&.
++must be run by user backup\&.
+ .SH "OPTIONS"
+ .PP
+ Options may be abbreviated, as long as the abbreviation is not ambiguous\&. Option argument can either separated by \*(Aq=\*(Aq or a space\&. Example: \-\-templ=harddisk \-\-tapedev /dev/nst0
+@@ -60,7 +60,7 @@ are the valid inputs for this option\&.
+ .sp
+ If tape\-changer is chosen for this option, program mtx is required\&.
+ \fBamserverconfig\fR
+-will search for mtx in the following directory: "/usr/sbin", "/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/bin" and amandabackup\*(Aqs PATH\&.
++will search for mtx in the following directory: "/usr/sbin", "/usr/local/sbin", "/usr/local/bin", "/usr/bin", "/bin" and backup\*(Aqs PATH\&.
+ .sp
+ If harddisk is chosen and \-\-no\-vtape is not specified,
+ \fBamserverconfig\fR
+@@ -106,7 +106,7 @@ The type of tape drive associated with t
+ .PP
+ \fB\-\-mailto mailto\fR
+ .RS 4
+-A space separated list of recipients for mail reports\&. default [amandabackup]
++A space separated list of recipients for mail reports\&. default [backup]
+ .RE
+ .PP
+ \fB\-\-dumpcycle dumpcycle\fR
+@@ -142,7 +142,7 @@ Amanda configuration template files inst
+ .PP
+ \fB/var/lib/amanda\fR
+ .RS 4
+-amandabackup home directory
++backup home directory
+ .RE
+ .PP
+ \fB/var/lib/amanda/gnutar\-lists\fR
+Index: amanda.git/man/amsuntar.8
+===================================================================
+--- amanda.git.orig/man/amsuntar.8	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/amsuntar.8	2017-10-07 20:36:43.034050592 +0100
+@@ -37,7 +37,7 @@ The
+ \fBdiskdevice\fR
+ in the disklist (DLE) must be the directory to backup\&.
+ .PP
+-Solaris 10 supports Role Based Access Control(RBAC) which is enabled by default\&. To run backup operations using sun tar utility by under privileged user like amandabackup, amandabackup user need to have proper roles and profiles, specially "Media Backup" profile/role\&. This can be done using \*(Aqusermod \-P "Media Backup" amandabackup\*(Aq command\&.
++Solaris 10 supports Role Based Access Control(RBAC) which is enabled by default\&. To run backup operations using sun tar utility by under privileged user like backup, backup user need to have proper roles and profiles, specially "Media Backup" profile/role\&. This can be done using \*(Aqusermod \-P "Media Backup" backup\*(Aq command\&.
+ .SH "PROPERTIES"
+ .PP
+ This section lists the properties that control amsuntar\*(Aqs functionality\&. See
+Index: amanda.git/man/xml-source/amaddclient.8.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amaddclient.8.xml	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/xml-source/amaddclient.8.xml	2017-10-07 20:36:43.034050592 +0100
+@@ -61,7 +61,7 @@ the client.
+ (See <refentrytitle>ssh-keygen</refentrytitle><manvolnum>1</manvolnum> and
+ <refentrytitle>ssh-add</refentrytitle><manvolnum>1</manvolnum> for detail.)</para>
+ <para>
+-&amaddclient; must be run by user amandabackup.</para>
++&amaddclient; must be run by user backup.</para>
+ <para> --config, --client and --diskdev must be specified.
+ </para> 
+ </refsect1>
+@@ -218,7 +218,7 @@ Specify either --excludefile or --exclud
+  <varlistentry>
+  <term><option>/var/lib/amanda</option></term>
+   <listitem>
+-<para>amandabackup home directory</para>
++<para>backup home directory</para>
+   </listitem>
+   </varlistentry>
+ 
+Index: amanda.git/man/xml-source/amanda-auth.7.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amanda-auth.7.xml	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/xml-source/amanda-auth.7.xml	2017-10-07 20:36:43.034050592 +0100
+@@ -79,7 +79,7 @@ Authentication	  Configure option(s)
+ <option>--with-user</option> option.  Most Amanda processes run under
+ this user's identity, to minimize security risks.  In binary
+ distributions, this username is usually one of 'amanda',
+-'amandabackup', or 'backup'.  The examples below use 'amandabackup'
++'backup', or 'backup'.  The examples below use 'backup'
+ since it is unambiguous. You may need to adjust accordingly for your
+ system.</para>
+ 
+@@ -141,10 +141,10 @@ configuration file.</para>
+ 
+ <para>If service is omitted, it defaults to <emphasis remap='B'>noop selfcheck sendsize sendbackup</emphasis> (which is equivalent to <emphasis remap='B'>amdump</emphasis>).</para>
+ 
+-    <para>Example of the .amandahosts file on an Amanda client, where 'amandabackup' is the Amanda dumpuser.
++    <para>Example of the .amandahosts file on an Amanda client, where 'backup' is the Amanda dumpuser.
+ 
+ <programlisting>
+-    <emphasis remap='B'>amandaserver.example.com   amandabackup   amdump</emphasis>
++    <emphasis remap='B'>amandaserver.example.com   backup   amdump</emphasis>
+ </programlisting>
+     </para>
+ 
+@@ -165,7 +165,7 @@ configuration file.</para>
+   </refsect2>
+ 
+   <refsect2><title>bsdtcp communication and authentication</title>
+-    <para>The authentication is done using .amandahosts files in the backup user's (for example: amandabackup) home directory. It uses TCP protocol between Amanda server and client. On the client, two reserved ports are used. On the server, all data streams are multiplexed to one port (see PORT USAGE below).</para>
++    <para>The authentication is done using .amandahosts files in the backup user's (for example: backup) home directory. It uses TCP protocol between Amanda server and client. On the client, two reserved ports are used. On the server, all data streams are multiplexed to one port (see PORT USAGE below).</para>
+   </refsect2>
+ 
+   <refsect2><title>USING INETD SERVER</title>
+@@ -175,24 +175,24 @@ configuration file.</para>
+ <emphasis remap='I'>   service_name</emphasis> <emphasis remap='I'>socket_type</emphasis> <emphasis remap='I'>protocol</emphasis> <emphasis remap='I'>wait/nowait</emphasis> <emphasis remap='I'>amanda_backup_user</emphasis> <emphasis remap='I'>absolute_path_to_amandad</emphasis> amandad <emphasis remap='I'>server_args</emphasis>
+ </programlisting>
+     </para>
+-    <para>Client example of using <emphasis remap='B'>bsd</emphasis> authorization for inetd server given Amanda user is "amandabackup":
++    <para>Client example of using <emphasis remap='B'>bsd</emphasis> authorization for inetd server given Amanda user is "backup":
+ 
+ <programlisting>
+-<emphasis remap='B'>   amanda dgram udp wait amandabackup /path/to/amandad amandad -auth=bsd amdump</emphasis>
++<emphasis remap='B'>   amanda dgram udp wait backup /path/to/amandad amandad -auth=bsd amdump</emphasis>
+ </programlisting>
+     </para>
+     <para>The same could be used for <emphasis remap='B'>bsdudp</emphasis> if specifying -auth=bsdudp instead of -auth=bsd.</para>
+-    <para>Client example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for inetd server given Amanda user is "amandabackup":
++    <para>Client example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for inetd server given Amanda user is "backup":
+ 
+ <programlisting>
+-<emphasis remap='B'>   amanda stream tcp nowait amandabackup /path/to/amandad amandad -auth=bsdtcp amdump</emphasis>
++<emphasis remap='B'>   amanda stream tcp nowait backup /path/to/amandad amandad -auth=bsdtcp amdump</emphasis>
+ </programlisting>
+     </para>
+     <para><emphasis remap='B'>amindexd</emphasis> and <emphasis remap='B'>amidxtaped</emphasis> would typically be added at the end of the line as &amandad; server arguments for an Amanda server.</para>
+-    <para>Server example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for inetd server given Amanda user is "amandabackup":
++    <para>Server example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for inetd server given Amanda user is "backup":
+ 
+ <programlisting>
+-<emphasis remap='B'>   amanda stream tcp nowait amandabackup /path/to/amandad amandad -auth=bsdtcp amdump amindexd amidxtaped</emphasis>
++<emphasis remap='B'>   amanda stream tcp nowait backup /path/to/amandad amandad -auth=bsdtcp amdump amindexd amidxtaped</emphasis>
+ </programlisting>
+     </para>
+     <para>For Amanda version 2.5.0 and earlier, remember that neither <emphasis remap='B'>bsdudp</emphasis> nor <emphasis remap='B'>bsdtcp</emphasis> are supported and the Amanda daemon &amandad; accepts no arguments.  Because of the latter, &amrecover; as of Amanda version 2.5.1  is not compatible with 2.5.0 and earlier servers.  Thus, servers that are 2.5.0 or earlier must, in addition to the <emphasis remap='I'>amanda</emphasis> service, run <emphasis remap='I'>amindexd</emphasis> and <emphasis remap='I'>amidxtaped</emphasis> Amanda services as their own network services, amandaidx and amidxtape, respectively (see below).</para>
+@@ -202,8 +202,8 @@ configuration file.</para>
+ <para>Example of amindexd and amidxtaped Amanda daemon services configured as their own network services for a 2.5.0 or earlier server or a newer server having 2.5.0 or earlier clients
+ 
+ <programlisting>
+-<emphasis remap='B'>   amandaidx stream tcp nowait amandabackup /usr/local/libexec/amanda/current/amindexd   amindexd</emphasis>
+-<emphasis remap='B'>   amidxtape stream tcp nowait amandabackup /usr/local/libexec/amanda/current/amidxtaped amidxtaped</emphasis>
++<emphasis remap='B'>   amandaidx stream tcp nowait backup /usr/local/libexec/amanda/current/amindexd   amindexd</emphasis>
++<emphasis remap='B'>   amidxtape stream tcp nowait backup /usr/local/libexec/amanda/current/amidxtaped amidxtaped</emphasis>
+ </programlisting>
+ </para>
+   </refsect2>
+@@ -228,7 +228,7 @@ service amanda
+ </programlisting>
+     </para>
+     <para>The <emphasis remap='I'>only_from</emphasis> parameter can be used with xinetd but is usually in addition to the primary form of access control via the .amandahosts file.</para>
+-    <para>Client example of using <emphasis remap='B'>bsd</emphasis> authorization for xinetd server and for Amanda user "amandabackup":
++    <para>Client example of using <emphasis remap='B'>bsd</emphasis> authorization for xinetd server and for Amanda user "backup":
+ 
+ <programlisting>
+ service amanda
+@@ -237,7 +237,7 @@ service amanda
+ 	socket_type     = dgram
+ 	protocol        = udp
+ 	wait            = yes
+-	user            = amandabackup
++	user            = backup
+ 	group           = disk
+ 	groups          = yes
+ 	server          = /path/to/amandad
+@@ -247,7 +247,7 @@ service amanda
+ </programlisting>
+     </para>
+     <para>The same could be used for <emphasis remap='B'>bsdudp</emphasis> if specifying -auth=bsdudp instead of -auth=bsd.</para>
+-    <para>Client example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for xinetd server and for Amanda user "amandabackup":
++    <para>Client example of using <emphasis remap='B'>bsdtcp</emphasis> authorization for xinetd server and for Amanda user "backup":
+ 
+ <programlisting>
+ service amanda
+@@ -256,7 +256,7 @@ service amanda
+ 	socket_type     = stream
+ 	protocol        = tcp
+ 	wait            = no
+-	user            = amandabackup
++	user            = backup
+ 	group           = disk
+ 	groups          = yes
+ 	server          = /path/to/amandad
+@@ -468,7 +468,7 @@ For example:
+ define dumptype rsh_example {
+          ...
+          auth "rsh"
+-         client-username "amandabackup"
++         client-username "backup"
+          amandad-path "/usr/lib/exec/amandad"
+          ...
+ }
+@@ -501,7 +501,7 @@ define dumptype rsh_example {
+ <para>Enable SSH authentication and set the <amkeyword>ssh-keys</amkeyword> option in all DLEs for that host by adding the following to the DLE itself or to the corresponding dumptype in amanda.conf:
+ <programlisting>
+   auth "ssh"
+-  ssh-keys "/home/amandabackup/.ssh/id_rsa_amdump"
++  ssh-keys "/home/backup/.ssh/id_rsa_amdump"
+ </programlisting>
+ </para>
+ 
+Index: amanda.git/man/xml-source/amgpgcrypt.8.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amgpgcrypt.8.xml	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/xml-source/amgpgcrypt.8.xml	2017-10-07 20:36:43.046050630 +0100
+@@ -92,11 +92,11 @@ You need a User-ID to identify your key;
+ from Real Name, Comment and Email Address in this form:
+     "Heinrich Heine (Der Dichter) (heinrichh@duesseldorf.de)"
+ 
+-Real name: amandabackup
++Real name: backup
+ Email address:
+-Comment: gpg keys for amandabackup
++Comment: gpg keys for backup
+ You selected this USER-ID:
+-    "amandabackup (gpg keys for amandabackup)"
++    "backup (gpg keys for backup)"
+ 
+ Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? o
+ You need a Passphrase to protect your secret key.
+@@ -114,7 +114,7 @@ generator a better chance to gain enough
+ public and secret key created and signed.
+ key marked as ultimately trusted.
+ 
+-pub  1024D/4417A8CB 2006-02-07 amandabackup (gpg keys for amandabackup)
++pub  1024D/4417A8CB 2006-02-07 backup (gpg keys for backup)
+      Key fingerprint = 139C 6369 44FC 7F1A 655C  E5E9 7EAA 515A 4417 A8CB
+ sub  1024g/8C3A6A78 2006-02-07 [expires: 2006-08-06]
+ 
+Index: amanda.git/man/xml-source/amserverconfig.8.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amserverconfig.8.xml	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/xml-source/amserverconfig.8.xml	2017-10-07 20:36:43.046050630 +0100
+@@ -50,7 +50,7 @@
+ It will create /var/lib/amanda/guntar-lists directory if one does
+ 	  not exist.
+ &amserverconfig; does not change existing Amanda configurations.
+-&amserverconfig; must be run by user amandabackup.
++&amserverconfig; must be run by user backup.
+ </para> 
+ </refsect1>
+ 
+@@ -73,7 +73,7 @@ Example:  --templ=harddisk --tapedev /de
+ 	        </para>
+ <para>If tape-changer is chosen for this option, program mtx is required. &amserverconfig; will
+ search for mtx in the following directory: "/usr/sbin", "/usr/local/sbin",
+-"/usr/local/bin", "/usr/bin", "/bin" and amandabackup's PATH.
++"/usr/local/bin", "/usr/bin", "/bin" and backup's PATH.
+ </para>
+ <para>
+ If harddisk is chosen and --no-vtape is not specified, &amserverconfig; will create and label virtual tape
+@@ -138,7 +138,7 @@ is supported.</para>
+   <varlistentry>
+   <term><option>--mailto mailto</option></term>
+   <listitem>
+-<para> A space separated list of recipients for mail reports. default [amandabackup]  </para>
++<para> A space separated list of recipients for mail reports. default [backup]  </para>
+   </listitem>
+   </varlistentry>
+ 
+@@ -193,7 +193,7 @@ is supported.</para>
+  <varlistentry>
+  <term><option>/var/lib/amanda</option></term>
+   <listitem>
+-<para>amandabackup home directory</para>
++<para>backup home directory</para>
+   </listitem>
+   </varlistentry>
+ 
+Index: amanda.git/man/xml-source/amsuntar.8.xml
+===================================================================
+--- amanda.git.orig/man/xml-source/amsuntar.8.xml	2017-10-07 20:36:43.050050642 +0100
++++ amanda.git/man/xml-source/amsuntar.8.xml	2017-10-07 20:36:43.046050630 +0100
+@@ -39,9 +39,9 @@ must be the directory to backup.</para>
+ 
+ <para>Solaris 10 supports Role Based Access Control(RBAC) which is enabled
+ by default. To run backup operations using  sun tar utility by under 
+-privileged user like amandabackup, amandabackup user need to have proper 
++privileged user like backup, backup user need to have proper 
+ roles and profiles, specially "Media Backup" profile/role. This can be done 
+-using 'usermod -P "Media Backup" amandabackup' command.</para>
++using 'usermod -P "Media Backup" backup' command.</para>
+ 
+ 
+ </refsect1>

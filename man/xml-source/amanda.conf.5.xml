@@ -951,7 +951,7 @@ Relative pathnames are relative to the configuration directory.
   <term><amkeyword>indexdir</amkeyword> <amtype>string</amtype></term>
   <listitem>
 <para>Default
-<amdefault>&quot;/usr/adm/amanda/index&quot;</amdefault>.
+<amdefault>&quot;<CONFIG_DIR>/index&quot;</amdefault>.
 The directory where index files (backup image catalogues) are stored.
 Index files are
 only generated for filesystems whose
@@ -966,7 +966,7 @@ option enabled.</para>
   <term><amkeyword>infofile</amkeyword> <amtype>string</amtype></term>
   <listitem>
 <para>Default:
-<amdefault>&quot;/usr/adm/amanda/curinfo&quot;</amdefault>.
+<amdefault>&quot;<CONFIG_DIR>/curinfo&quot;</amdefault>.
 The file or directory name for the historical information database.
 If Amanda was configured to use DBM databases, this is the base file
 name for them.
@@ -1033,7 +1033,7 @@ tape label to any blank tape she encounters.</para>
   <term><amkeyword>logdir</amkeyword> <amtype>string</amtype></term>
   <listitem>
 <para>Default:
-<amdefault>&quot;/usr/adm/amanda&quot;</amdefault>.
+<amdefault>&quot;<CONFIG_DIR>&quot;</amdefault>.
 The directory for the
 <command>amdump</command>
 and
@@ -1257,9 +1257,9 @@ How many times the server will resend a REQ packet if it doesn't get the ACK pac
 <para>Default:
 <amdefault>100</amdefault>.
 The part of holding-disk space that should be reserved for incremental
-backups if no tape is available, expressed as a percentage of the 
+backups if no tape is available, expressed as a percentage of the
 available holding-disk space (0-100).
-By default, when there is no tape to write to, degraded mode (incremental) backups 
+By default, when there is no tape to write to, degraded mode (incremental) backups
 will be performed to the holding disk. If full backups should also be allowed in this case,
 the amount of holding disk space reserved for incrementals should be lowered.</para>
   </listitem>
@@ -1516,7 +1516,7 @@ The algorithm used to choose which dump image to send to the taper.</para>
   than this setting allows; the amount is specified as a percentage of
   the capacity of a single
   volume. In other words, at the end of a run, Amanda will begin
-  a new tape if the 
+  a new tape if the
   inequality <inlineequation><mathphrase>h &gt; t &#215;
   f</mathphrase></inlineequation> is satisfied,
   where <mathphrase>h</mathphrase> is the amount of data remaining on the
@@ -1713,8 +1713,8 @@ If the value is negative, Amanda will use all available space minus that value.<
 <amdefault>1 Gb</amdefault>.
 Holding disk chunk size. Dumps larger than the specified size will be stored in multiple
 holding disk files. The size of each chunk will not exceed the specified value.
-However, even though dump images are split in the holding disk, they are concatenated as 
-they are written to tape, so each dump image still corresponds to a single continuous 
+However, even though dump images are split in the holding disk, they are concatenated as
+they are written to tape, so each dump image still corresponds to a single continuous
 tape section.</para>
 <para>The default unit is Kbytes if it is not specified.</para>
 
@@ -1738,7 +1738,7 @@ file size, e.g. 2047 Mbytes.</para>
 </refsect1>
 
 <refsect1><title>DUMPTYPE SECTION</title>
-<para>The &amconf; file may define multiple sets of backup options 
+<para>The &amconf; file may define multiple sets of backup options
 and refer to them by name from the &disklist; file.
 For instance, one set of options might be defined for file systems
 that can benefit from high compression, another set that does not compress well,
@@ -1958,7 +1958,7 @@ A comment string describing this set of backup options.</para>
 The expected full and incremental compression factor for dumps.
 It is only used if Amanda does not have any history information on
 compression rates for a filesystem, so should not usually need to be set.
-However, it may be useful for the first time a very large filesystem that 
+However, it may be useful for the first time a very large filesystem that
 compresses very little is backed up.</para>
   </listitem>
   </varlistentry>
@@ -1968,10 +1968,10 @@ compresses very little is backed up.</para>
   <listitem>
 <para>Default:
 <amkeyword>client fast</amkeyword>.
-If Amanda does compression of the backup images, it can do so either on the backup client 
+If Amanda does compression of the backup images, it can do so either on the backup client
 host before it crosses the network or on the tape server host as it goes from the
 network into the holding disk or to tape.  Which place to do compression (if at all) depends on how well the
-dump image usually compresses, the speed and load on the client or server, network capacity, 
+dump image usually compresses, the speed and load on the client or server, network capacity,
 holding disk capacity, availability of tape hardware compression, etc.</para>
 
 <para>For either type of compression, Amanda also allows the selection
@@ -2027,7 +2027,7 @@ or <emphasis remap='B'>mt</emphasis> option), Amanda (software) compression shou
   <term><amkeyword>dumpcycle</amkeyword> <amtype>int</amtype></term>
   <listitem>
 <para>Default: <amdefault>10 days</amdefault>.
-The number of days in the backup cycle. Each disk using this set of options will get a full 
+The number of days in the backup cycle. Each disk using this set of options will get a full
 backup at least this of
 ten. Setting this to zero tries to do a full backup each run.</para>
   </listitem>
@@ -2270,7 +2270,7 @@ is a file name on the client containing glob expressions.</para>
 <para>Include expressions must always be specified as relative to the
 head directory of the DLE.</para>
 
-<note><para>For globbing to work at all, even the limited single level, 
+<note><para>For globbing to work at all, even the limited single level,
 the top level directory of the DLE must be readable by the Amanda user.</para>
 </note>
 
@@ -2280,7 +2280,7 @@ the top level directory of the DLE must be readable by the Amanda user.</para>
 
 <para>If
 <amkeyword>optional</amkeyword> is specified for
-<amkeyword>include list</amkeyword>, then amcheck will not complain if the file 
+<amkeyword>include list</amkeyword>, then amcheck will not complain if the file
 doesn't exist or is not readable.</para>
 
 <para>For <amkeyword>include list</amkeyword>,
@@ -2469,7 +2469,7 @@ The program to use to perform encryption/decryption on the server; used with
 <para>Default:
 <amkeyword>no</amkeyword>. If <amkeyword>true</amkeyword> and
 <emphasis remap='B'>planner</emphasis> has scheduled a full backup, these disks will be skipped, and
-full backups should be run off-line on these days. It was reported that Amanda only schedules 
+full backups should be run off-line on these days. It was reported that Amanda only schedules
 level 1 incrementals in this configuration; this is probably a bug.</para>
   </listitem>
   </varlistentry>
@@ -2608,7 +2608,7 @@ define dumptype "no-hold" {
 }
 define dumptype "no-full" {
     skip-full yes
-} 
+}
 </programlisting>
 
 <para>In addition to options in a
@@ -2724,7 +2724,7 @@ man page for more information.</para>
 <amdefault>2000 kbytes</amdefault>. How much data will fit on a tape, expressed in kbytes.</para>
 
 <para>Note that this value is only used by Amanda to schedule which backups will be run.
-Once the backups start, Amanda will continue to write to a tape until it gets an error, 
+Once the backups start, Amanda will continue to write to a tape until it gets an error,
 regardless of what value is entered for <amkeyword>length</amkeyword>
 (but see <manref name="amanda-devices" vol="7" /> for exceptions).
  </para>
@@ -2965,7 +2965,7 @@ the property to set, and the others contains its values.
 <refsect1><title>SCRIPT SECTION</title>
 <para>The
 <emphasis remap='B'>amanda.conf</emphasis>
-file may define multiple types of script. 
+file may define multiple types of script.
 The information is entered in a <amkeyword>script</amkeyword>
 section, which looks like this:</para>
 

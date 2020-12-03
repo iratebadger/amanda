@@ -1,0 +1,23 @@
+name: amanda
+version: 4.0.1alpha
+summary: Amanda Backup
+description: |
+  Amanda is a backup system designed to backup and archive many
+  computers on a network to disk, tape changer/drive or cloud storage.
+
+base: core18
+confinement: devmode
+
+parts:
+  server:
+    plugin: dump
+    override-pull: |
+      snapcraftctl pull
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-doc
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-src
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-examples
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-example
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-src
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-doc
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fix-amserverconfig-path
+      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fix-amserverconfig-template-path

@@ -26,6 +26,8 @@ AM_CPPFLAGS =  \
             -I$(top_srcdir)/ndmp-src \
             $(PERL_INC)
 
+GENDATE = $(shell date --utc --date="@${SOURCE_DATE_EPOCH:-$(shell date +%s)}")
+
 if WANT_SERVER
 AM_CPPFLAGS += -I$(top_srcdir)/device-src \
 	    -I$(top_srcdir)/server-src
@@ -742,7 +744,6 @@ EXTRA_DIST += Amanda/Application/Zfs.pm
 ../genversion.h Amanda/Constants.pm.in: $(top_builddir)/config.status Amanda/Constants.pm.in.src
 	-rm -f ../common-src/genversion.h ../common-src/genversion.h.new
 	echo '#define CC "$(CC)"' > ../common-src/genversion.h.new
-	GENDATE=`date`; \
 	echo '#define BUILT_DATE "'$$GENDATE'"' >> ../common-src/genversion.h.new; \
 	echo '#define BUILT_MACH "$(target)"' >> ../common-src/genversion.h.new; \
 	mv ../common-src/genversion.h.new ../common-src/genversion.h; \
