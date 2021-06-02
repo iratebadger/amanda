@@ -540,7 +540,7 @@ bind_portrange(
     port = (in_port_t)(((getpid() + time(0)) % num_ports) + first_port);
 
     /*
-     * Scan through the range, trying all available ports that are either 
+     * Scan through the range, trying all available ports that are either
      * not taken in /etc/services or registered for *amanda*.  Wrap around
      * if we don't happen to start at the beginning.
      */
@@ -1488,7 +1488,7 @@ readline(
     return pgets(stdin);
 }
 
-void 
+void
 add_history(
     const char *line)
 {
@@ -1532,7 +1532,7 @@ char * portable_readdir(DIR* handle) {
 #endif
 
     g_static_mutex_unlock(&mutex);
-    
+
     if (entry_p == NULL)
         return NULL;
 
@@ -1799,7 +1799,7 @@ set_root_privs(int need_root)
 	/* and set all of our userids (including, importantly, the saved
 	 * userid) to 0
 	 * It can fail we are not 0, we don't care */
-	setuid(0);
+	(void) setuid(0);
 
 	/* don't need to do this next time */
 	first_call = FALSE;

@@ -180,8 +180,8 @@ robot_state_init(struct robot_state *rs)
 
 		es->medium_type = 1; /* data */
 		es->source_element = 0;
-		snprintf(es->pvoltag, sizeof(es->pvoltag), "PTAG%02XXX                        ", i);
-		snprintf(es->avoltag, sizeof(es->avoltag), "ATAG%02XXX                        ", i);
+		snprintf(es->pvoltag, sizeof(es->pvoltag), "PTAG%02XXX                       ", i);
+		snprintf(es->avoltag, sizeof(es->avoltag), "ATAG%02XXX                       ", i);
 	}
 
 	/* (i/e are all empty) */
@@ -198,7 +198,7 @@ robot_state_load(struct ndm_session *sess, struct robot_state *rs)
 	/* N.B. writing a struct to disk like this isn't portable, but this
 	 * is test code, so it's OK for now. */
 
-	snprintf(filename, sizeof filename, "%s/state", sess->robot_acb.sim_dir);
+	snprintf(filename, sizeof(filename), "%s/state", sess->robot_acb.sim_dir);
 	fd = open(filename, O_RDONLY, 0666);
 	if (fd < 0) {
 		robot_state_init(rs);
@@ -222,7 +222,7 @@ robot_state_save(struct ndm_session *sess, struct robot_state *rs)
 	/* N.B. writing a struct to disk like this isn't portable, but this
 	 * is test code, so it's OK for now. */
 
-	snprintf(filename, sizeof filename, "%s/state", sess->robot_acb.sim_dir);
+	snprintf(filename, sizeof(filename), "%s/state", sess->robot_acb.sim_dir);
 	fd = open(filename, O_WRONLY|O_TRUNC|O_CREAT, 0666);
 	if (fd < 0)
 		return -1;

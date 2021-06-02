@@ -8,16 +8,124 @@ description: |
 base: core18
 confinement: devmode
 
+plugs:
+  block-devices:
+  network:
+  system-backup:
+
+  system-files:
+    read:
+      - /etc/amanda/
+      - /etc/openafs/
+    write:
+      - /etc/amanda/
+      - /var/lib/amanda
+
+hooks:
+  install:
+    plugs:
+      - system-files
+
+
 parts:
   server:
-    plugin: dump
+    plugin: autotools
+    source: https://github.com/iratebadger/amanda.git
     override-pull: |
       snapcraftctl pull
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-doc
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-src
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fhs-dumpdates-path-examples
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-example
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-src
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/change-from-amandabackup-to-backup-doc
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fix-amserverconfig-path
-      patch -p1 < $SNAPCRAFT_STAGE/snapcraft/patches/fix-amserverconfig-template-path
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/fhs-dumpdates-path-doc"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/fhs-dumpdates-path-src"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/fhs-dumpdates-path-examples"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/change-from-amandabackup-to-backup-example"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/change-from-amandabackup-to-backup-src"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/change-from-amandabackup-to-backup-doc"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/fix-amserverconfig-path"
+      patch -d "$SNAPCRAFT_PART_SRC" -p1 < "$SNAPCRAFT_PART_SRC/packaging/snapcraft/patches/fix-amserverconfig-template-path"
+    override-build: |
+      ./autogen
+      LIBS="-lssl" snapcraftctl build
+
+    override-stage: |
+      snapcraftctl stage
+      chgrp backup \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/application/amgtar \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/application/amstar \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/calcsize \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/killpgrp \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/rundump \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/runtar \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/ambind \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/dumper \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/planner \
+        $SNAPCRAFT_STAGE/usr/sbin/amcheck
+      chmod u=srwx,g=rx,o=r \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/application/amgtar \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/application/amstar \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/calcsize \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/killpgrp \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/rundump \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/runtar
+      chmod u==srwx,g=rx,o= \
+        $SNAPCRAFT_STAGE/usr/lib/amanda/ambind
+
+    build-packages:
+      - autotools-dev
+      - bsd-mailx
+      - bison
+      - curl
+      - debhelper
+      - dh-autoreconf
+      - dump
+      - flex
+      - gawk
+      - gnuplot
+      - libcurl4-openssl-dev
+      - libglib2.0-dev
+      - libncurses5-dev
+      - libreadline-dev
+      - libssl-dev
+      - libkrb5-dev
+      - libtool
+      - lpr
+      - mtx
+      - perl
+      - po-debconf
+      - procps
+      - smbclient
+      - swig
+      - xfsdump
+    stage-packages:
+      - bsd-mailx
+      - libjson-perl
+      - libkrb5-3
+      - libcurl4
+      - openafs-client
+      - openafs-krb5
+      - perl
+      - smbclient
+    configflags:
+      - --prefix=$SNAP/usr
+      - --bindir=$SNAP/usr/sbin
+      - --libexecdir=$SNAP/usr/lib/amanda
+      - --without-amlibexecdir
+      - --without-amperldir
+      - --sysconfdir=$SNAP_DATA/etc
+      - --sharedstatedir=$SNAP_DATA/var/lib
+      - --localstatedir=$SNAP_DATA/var/lib
+      - --with-user=backup
+      - --with-group=backup
+      - --with-tcpportrange=50000,50100
+      - --with-udpportrange=840,860
+      - --with-debugging=$SNAP_DATA/var/log/amanda
+      - --with-gnutar-listdir=$SNAP_DATA/var/lib/amanda/gnutar-lists
+      - --with-amandates=$SNAP_DATA/var/lib/amanda/amandates
+      - --with-index-server=localhost
+      - --with-bsd-security
+      - --with-smbclient=/usr/bin/smbclient
+      - --with-amandahosts
+      - --with-ssh-security
+      - --with-krb5-security
+      - --with-bsdtcp-security
+      - --with-bsdudp-security
+      - --without-ipv6
+      - --enable-s3-device

@@ -25,7 +25,7 @@ add_service() {
     fi
 
     # make sure kamanda is in /etc/services
-    entry_2="amanda       10081/tcp    famdc    # amanda backup services (kerberos)"
+    entry_2="kamanda       10081/tcp    famdc    # amanda backup services (kerberos)"
     if [ -z "`grep 'kamanda' /etc/services |grep '10081/tcp'`" ] ; then
         logger "Adding kamanda entry to ${SYSCONFDIR}/services."
         echo "${entry_2}" >> ${SYSCONFDIR}/services
