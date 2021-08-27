@@ -55,9 +55,11 @@ TESTS = xfer-test
 noinst_PROGRAMS = $(TESTS)
 
 xfer_test_SOURCES = xfer-test.c
-xfer_test_LDADD = \
+xfer_test_LDADD = libamxfer.la \
 	../common-src/libtestutils.la \
-	libamxfer.la
+	../common-src/libamanda.la \
+	../gnulib/libgnu.la
+
 
 # lint support
 
