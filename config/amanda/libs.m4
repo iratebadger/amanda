@@ -183,6 +183,44 @@ AC_DEFUN([AMANDA_CHECK_GLIB], [
     AMANDA_ADD_LIBS($GLIB_LIBS)
 ])
 
+# SYNOPSIS
+#
+#   AMANDA_CHECK_TIRPC
+#
+# OVERVIEW
+#
+#   Search for tirpc.
+#
+AC_DEFUN([AMANDA_CHECK_TIRPC],
+[
+    AC_PATH_PROG(PKG_CONFIG, pkg-config, [], $LOCSYSPATH:/opt/csw/bin:/usr/local/bin:/opt/local/bin)
+
+    tirpc_ld_flags=`$PKG_CONFIG libtirpc --libs-only-L 2>/dev/null`
+    tirpc_lib_flags=`$PKG_CONFIG libtirpc --libs-only-l --libs-only-other 2>/dev/null`
+    tirpc_cppflags=`$PKG_CONFIG libtirpc --cflags-only-I 2>/dev/null`
+    tirpc_cflags=`$PKG_CONFIG libtirpc --cflags-only-other 2>/dev/null`
+
+    _libtirpc_save_cppflags=$CPPFLAGS
+    CPPFLAGS="$CPPFLAGS $tirpc_cppflags"
+    _libtirpc_save_libs=$LIBS
+    LIBS="$LIBS $tirpc_lib_flags"
+
+    unset HAVE_RPC_RPC_H
+    unset ac_cv_header_rpc_rpc_h
+    AC_CHECK_HEADERS(rpc/rpc.h, HAVE_RPC_RPC_H=1)
+
+    CPPFLAGS=$_libtirpc_save_cppflags
+    LIBS=$_libtirpc_save_libs
+
+    if test x"$HAVE_RPC_RPC_H" = x"1"; then
+	AMANDA_ADD_LDFLAGS($tirpc_ld_flags)
+	AMANDA_ADD_LIBS($tirpc_lib_flags)
+
+	AMANDA_ADD_CPPFLAGS($tirpc_cppflags)
+	AMANDA_ADD_CFLAGS($tirpc_cflags)
+    fi
+])
+
 # LIBCURL_CHECK_CONFIG is from the libcurl
 # distribution and licensed under the BSD license:
 # Copyright (c) 1996 - 2007, Daniel Stenberg, <daniel@haxx.se>.

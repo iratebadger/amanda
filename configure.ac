@@ -13,6 +13,7 @@ AMANDA_VERSION
 gl_EARLY
 gl_INIT
 
+AMANDA_INIT_SUMMARY
 AMANDA_CONFIGURE
 
 AC_DEFINE([USE_GETTEXT], 1, [Define to 1 if files will be processed with gettextize])

@@ -186,7 +186,21 @@ AC_DEFUN([AMANDA_WITHOUT_NDMP], [
 	    n | no) WANT_NDMP=false;;
 	    *) AC_MSG_ERROR([You must not supply an argument to --with-ndmp option.]) ;;
 	    esac
-	])
+    ])
+    AC_CHECK_HEADERS(rpc/rpc.h, HAVE_RPC_RPC_H=1)
+    if test x"$WANT_NDMP" = x"true"; then
+	if test x"$HAVE_RPC_RPC_H" = x"1"; then
+	    WANT_NDMP=true
+	else
+	    AMANDA_CHECK_TIRPC
+	    if test x"$HAVE_RPC_RPC_H" = x"1"; then
+		WANT_NDMP=true
+	    else
+		WANT_NDMP=false
+		AMANDA_MSG_WARN([Disabling NDMP because rpc/rpc.h is not found])
+	    fi
+	fi
+   fi
 ])
 
 # SYNOPSIS

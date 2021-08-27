@@ -24,7 +24,6 @@ reproducible-build
 34-fix-for-samba-on-deb10
 36-fix-for-samba-on-deb10-part-2
 40-examples-quick
-44-add-TI-RPC
 
 ######################################################################
 # Patches to debug behaviour
