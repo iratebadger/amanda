@@ -1,0 +1,4 @@
+example/amanda-client-postgresql.conf
+example/amanda-client.conf
+example/inetd.conf.amandaclient
+example/xinetd.amandaclient

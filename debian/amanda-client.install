@@ -1,0 +1,15 @@
+etc/amanda/amanda-security.conf etc
+usr/lib/amanda/amandad
+usr/lib/amanda/application/*
+usr/lib/amanda/calcsize
+usr/lib/amanda/killpgrp
+usr/lib/amanda/patch-system
+usr/lib/amanda/rundump
+usr/lib/amanda/runtar
+usr/lib/amanda/selfcheck
+usr/lib/amanda/sendbackup
+usr/lib/amanda/sendsize
+usr/sbin/amfetchdump
+usr/sbin/amoldrecover
+usr/sbin/amrecover
+usr/sbin/amrestore

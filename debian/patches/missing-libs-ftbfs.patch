@@ -1,0 +1,59 @@
+From: Artur Rona <ari-tczew@ubuntu.com>
+Description: Add missing libs to link.
+Author: Daniel T Chen <crimsun@ubuntu.com>
+Last-Update: 2014-08-16
+
+Index: amanda.git/amar-src/Makefile.am
+===================================================================
+--- amanda.git.orig/amar-src/Makefile.am	2017-01-15 19:22:04.246413597 +0000
++++ amanda.git/amar-src/Makefile.am	2017-01-15 19:22:04.242413592 +0000
+@@ -26,7 +26,8 @@ noinst_HEADERS = \
+ sbin_PROGRAMS = amarchiver
+ 
+ amarchiver_SOURCES = amarchiver.c
+-amarchiver_LDADD = libamar.la
++amarchiver_LDADD = libamar.la \
++	../common-src/libamanda.la
+ 
+ # automake-style tests
+ 
+@@ -35,4 +36,5 @@ noinst_PROGRAMS = $(TESTS)
+ 
+ amar_test_SOURCES = amar-test.c
+ amar_test_LDADD = libamar.la \
+-	../common-src/libtestutils.la
++	../common-src/libtestutils.la \
++	../common-src/libamanda.la
+Index: amanda.git/ndmp-src/Makefile.am
+===================================================================
+--- amanda.git.orig/ndmp-src/Makefile.am	2017-01-15 19:22:04.246413597 +0000
++++ amanda.git/ndmp-src/Makefile.am	2017-01-15 19:22:04.242413592 +0000
+@@ -204,10 +204,12 @@ amndmjob_SOURCES = amndmjob_main.c \
+ 		      amndma_tape_simulator.c
+ 
+ ndmjob_LDADD = libndmjob.la \
+-		   ../common-src/libamanda.la
++		   ../common-src/libamanda.la \
++		   libndmlib.la
+ 
+ amndmjob_LDADD = libndmjob.la \
+-		   ../common-src/libamanda.la
++		   ../common-src/libamanda.la \
++		   libndmlib.la
+ 
+ ndmp0_xdr.c : ndmp0.x
+ 	rm -f ndmp0_xdr.c
+Index: amanda.git/xfer-src/Makefile.am
+===================================================================
+--- amanda.git.orig/xfer-src/Makefile.am	2017-01-15 19:22:04.246413597 +0000
++++ amanda.git/xfer-src/Makefile.am	2017-01-15 19:22:04.242413592 +0000
+@@ -57,7 +57,8 @@ noinst_PROGRAMS = $(TESTS)
+ xfer_test_SOURCES = xfer-test.c
+ xfer_test_LDADD = \
+ 	../common-src/libtestutils.la \
+-	libamxfer.la
++	libamxfer.la \
++	../common-src/libamanda.la
+ 
+ # lint support
+ 

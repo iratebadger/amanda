@@ -1,0 +1,163 @@
+Source: amanda
+Section: utils
+Priority: optional
+Maintainer: Jose M Calhariz <calhariz@debian.org>
+Build-Depends: autotools-dev,
+               bsd-mailx | mailx,
+               curl,
+               debhelper (>= 10~),
+               dh-autoreconf,
+               dump [linux-any],
+               flex,
+               gawk,
+               gnuplot,
+               libcurl4-openssl-dev,
+               libglib2.0-dev,
+               libncurses5-dev,
+               libkrb5-dev,
+               libreadline-dev,
+               libssl-dev,
+               libtirpc-dev,
+               libtool,
+               lpr,
+               mtx,
+               perl,
+               po-debconf,
+               pkg-config,
+               procps,
+               smbclient,
+               swig,
+               xfsdump [linux-any],
+Standards-Version: 4.0.1
+Homepage: http://www.amanda.org/
+Vcs-Git: https://salsa.debian.org/debian/amanda.git
+Vcs-Browser: https://salsa.debian.org/debian/amanda
+
+Package: amanda-common
+Architecture: any
+Depends: adduser,
+         bsd-mailx | mailx,
+         debconf | debconf-2.0,
+         openbsd-inetd | inet-superserver,
+         update-inetd,
+         libjson-perl,
+         ${misc:Depends},
+         ${perl:Depends},
+         ${shlibs:Depends},
+Suggests: amanda-server (= ${binary:Version}) | amanda-client (= ${binary:Version}),
+Conflicts: amanda,
+Breaks: amanda-client (<< 1:3.5),
+        amanda-server (<< 1:3.5.1-3~)
+Replaces: amanda,
+          amanda-client (<< 1:3.5),
+          amanda-server (<< 1:3.5.1-3~)
+Description: Advanced Maryland Automatic Network Disk Archiver (Libs)
+ This package contains libraries required by the amanda client and
+ server packages and includes the documentation.
+
+Package: amanda-server
+Architecture: any
+Depends: amanda-common (= ${binary:Version}),
+         bsd-mailx | mailx,
+         libjson-perl,
+         ${misc:Depends},
+         ${perl:Depends},
+         ${shlibs:Depends},
+Suggests: amanda-client (= ${binary:Version}),
+          cpio | mt-st,
+          gnuplot,
+Conflicts: amanda,
+Description: Advanced Maryland Automatic Network Disk Archiver (Server)
+ Amanda is a backup system designed to archive many computers on a
+ network to a single large-capacity tape drive. This package is
+ suitable for large amounts of data to backup. For smaller solutions
+ take a look at afbackup, tob, ...
+ .
+  Features:
+   * will back up multiple machines in parallel to a holding disk, blasting
+     finished dumps one by one to tape as fast as they can be written to
+     tape.  For example, a ~2 Gb 8mm tape on a ~240K/s interface to a host
+     with a large holding disk can be filled by Amanda in under 4 hours.
+   * built on top of standard backup software: Unix dump/restore, and
+     later GNU Tar and others.
+   * does simple tape management: will not overwrite the wrong tape.
+   * supports tape changers via a generic interface.  Easily customizable
+     to any type of tape carousel, robot, or stacker that can be controlled
+     via the unix command line.
+   * for a restore, tells you what tapes you need, and finds the proper
+     backup image on the tape for you.
+   * recovers gracefully from errors, including down or hung machines.
+   * reports results, including all errors in detail, in email to operators.
+   * will dynamically adjust backup schedule to keep within constraints:
+     no more juggling by hand when adding disks and computers to network.
+   * includes a pre-run checker program, that conducts sanity checks on both
+     the tape server host and all the client hosts (in parallel), and will
+     send an e-mail report of any problems that could cause the backups to
+     fail.
+   * can compress dumps before sending or after sending over the net, with
+     either compress or gzip.
+   * can optionally synchronize with external backups, for those large
+     timesharing computers where you want to do full dumps when the system
+     is down in single-user mode (since BSD dump is not reliable on active
+     filesystems): Amanda will still do your daily dumps.
+   * lots of other options; Amanda is very configurable.
+ .
+ For important notes, see /usr/share/doc/amanda-server/README.Debian.
+ .
+ Explanation of suggested programs:
+  - perl is needed for some non essential server utilities
+  - gnuplot is needed for plotting statistics of backups
+  - to backup the tape server, you need to install the client too
+
+Package: amanda-client
+Architecture: any
+Depends: amanda-common (= ${binary:Version}),
+         libxml-simple-perl,
+         ${misc:Depends},
+         ${perl:Depends},
+         ${shlibs:Depends},
+Suggests: dump,
+          gnuplot,
+          smbclient,
+Conflicts: amanda,
+Description: Advanced Maryland Automatic Network Disk Archiver (Client)
+ Amanda is a backup system designed to archive many computers on a
+ network to a single large-capacity tape drive. This package is
+ suitable for large amounts of data to backup. For smaller solutions
+ take a look at afbackup, tob, ...
+ .
+  Features:
+   * will back up multiple machines in parallel to a holding disk, blasting
+     finished dumps one by one to tape as fast as they can be can written to
+     tape.  For example, a ~2 Gb 8mm tape on a ~240K/s interface to a host
+     with a large holding disk can be filled by Amanda in under 4 hours.
+   * built on top of standard backup software: Unix dump/restore, and
+     later GNU Tar and others.
+   * does simple tape management: will not overwrite the wrong tape.
+   * supports tape changers via a generic interface.  Easily customizable
+     to any type of tape carousel, robot, or stacker that can be controlled
+     via the unix command line.
+   * for a restore, tells you what tapes you need, and finds the proper
+     backup image on the tape for you.
+   * recovers gracefully from errors, including down or hung machines.
+   * reports results, including all errors in detail, in email to operators.
+   * will dynamically adjust backup schedule to keep within constraints:
+     no more juggling by hand when adding disks and computers to network.
+   * includes a pre-run checker program, that conducts sanity checks on both
+     the tape server host and all the client hosts (in parallel), and will
+     send an e-mail report of any problems that could cause the backups to
+     fail.
+   * can compress dumps before sending or after sending over the net, with
+     either compress or gzip.
+   * can optionally synchronize with external backups, for those large
+     timesharing computers where you want to do full dumps when the system
+     is down in single-user mode (since BSD dump is not reliable on active
+     filesystems): Amanda will still do your daily dumps.
+   * lots of other options; Amanda is very configurable.
+ .
+ THIS PACKAGE RELIES ON A RUNNING AMANDA SERVER IN YOUR NETWORK.
+ .
+ For important notes, see /usr/share/doc/amanda-client/README.Debian.
+ .
+ Explanation of suggested programs:
+  - gnuplot is needed for plotting statistics of backups

@@ -1,0 +1,85 @@
+Description: make dumpdates path in docs match Debian configuration
+Author: Bdale Garbee <bdale@gag.com>, Jose M Calhariz <jose@calhariz.com>
+
+Index: amanda.git/client-src/amandates.c
+===================================================================
+--- amanda.git.orig/client-src/amandates.c	2017-10-07 20:36:18.689973980 +0100
++++ amanda.git/client-src/amandates.c	2017-10-07 20:36:18.645973841 +0100
+@@ -28,7 +28,7 @@
+ /*
+  * $Id: amandates.c,v 1.21 2006/07/25 18:35:21 martinea Exp $
+  *
+- * manage amandates file, that mimics /etc/dumpdates, but stores
++ * manage amandates file, that mimics /var/lib/dumpdates, but stores
+  * GNUTAR dates
+  */
+ 
+@@ -333,7 +333,7 @@ import_dumpdates(
+ 
+     devname = amname_to_devname(amdp->name);
+ 
+-    if((dumpdf = fopen("/etc/dumpdates", "r")) == NULL) {
++    if((dumpdf = fopen("/var/lib/dumpdates", "r")) == NULL) {
+ 	amfree(devname);
+ 	return;
+     }
+Index: amanda.git/client-src/selfcheck.c
+===================================================================
+--- amanda.git.orig/client-src/selfcheck.c	2017-10-07 20:36:18.689973980 +0100
++++ amanda.git/client-src/selfcheck.c	2017-10-07 20:36:18.653973866 +0100
+@@ -1581,8 +1581,8 @@ check_overall(void)
+ 	delete_message(selfcheck_print_message(check_file_message(COMPRESS_PATH, X_OK)));
+ 
+     if (need_dump || need_xfsdump ) {
+-	if (check_file_exist("/etc/dumpdates")) {
+-	    delete_message(selfcheck_print_message(check_file_message("/etc/dumpdates",
++	if (check_file_exist("/var/lib/dumpdates")) {
++	    delete_message(selfcheck_print_message(check_file_message("/var/lib/dumpdates",
+ #ifdef USE_RUNDUMP
+ 		       F_OK
+ #else
+@@ -1602,8 +1602,8 @@ check_overall(void)
+     }
+ 
+     if (need_vdump) {
+-	if (check_file_exist("/etc/vdumpdates")) {
+-            delete_message(selfcheck_print_message(check_file_message("/etc/vdumpdates", F_OK)));
++	if (check_file_exist("/var/lib/vdumpdates")) {
++            delete_message(selfcheck_print_message(check_file_message("/var/lib/vdumpdates", F_OK)));
+ 	}
+     }
+ 
+@@ -1615,6 +1615,7 @@ check_overall(void)
+     check_space(AMANDA_DBGDIR, (off_t)64);	/* for amandad i/o */
+ #endif
+ 
++    check_space("/var/lib", (off_t)64);		/* for /var/lib/dumpdates writing */
+     check_space("/etc", (off_t)64);		/* for /etc/dumpdates writing */
+     }
+ }
+Index: amanda.git/server-src/diskfile.h
+===================================================================
+--- amanda.git.orig/server-src/diskfile.h	2017-10-07 20:36:18.689973980 +0100
++++ amanda.git/server-src/diskfile.h	2017-10-07 20:36:18.661973891 +0100
+@@ -120,7 +120,7 @@ typedef struct disk_s {
+     char	*clnt_decrypt_opt;	/* client-side decryption option parameter to use */
+     double	comprate[2];		/* default compression rates */
+     /* flag options */
+-    int		record;			/* record dump in /etc/dumpdates ? */
++    int		record;			/* record dump in /var/lib/dumpdates ? */
+     int		skip_incr;		/* incs done externally ? */
+     int		skip_full;		/* fulls done externally ? */
+     int		orig_holdingdisk;	/* original holdingdisk setting */
+Index: amanda.git/common-src/ammessage.c
+===================================================================
+--- amanda.git.orig/common-src/ammessage.c	2017-10-07 20:36:18.689973980 +0100
++++ amanda.git/common-src/ammessage.c	2017-10-07 20:36:18.677973942 +0100
+@@ -1424,7 +1424,7 @@ set_message(
+     } else if (message->code == 3600085) {
+ 	msg = "unable to open /etc/amandapass: %{errnostr}";
+     } else if (message->code == 3600086) {
+-	msg = "dump will not be able to create the /etc/dumpdates file: %{errnostr}";
++	msg = "dump will not be able to create the /var/lib/dumpdates file: %{errnostr}";
+     } else if (message->code == 3600087) {
+ 	msg = "%{device}: samba access error: %{errmsg}";
+     } else if (message->code == 3600088) {

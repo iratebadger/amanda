@@ -1,0 +1,26 @@
+Description: adjust template path to work with Debian 
+Bug: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=551564
+Author: Bill Blough <devel@blough.us>
+
+Index: amanda.git/server-src/amserverconfig.pl
+===================================================================
+--- amanda.git.orig/server-src/amserverconfig.pl	2017-01-15 19:23:30.394520556 +0000
++++ amanda.git/server-src/amserverconfig.pl	2017-01-15 19:23:30.390520550 +0000
+@@ -34,7 +34,7 @@ use Amanda::Constants;
+ my $confdir="$CONFIG_DIR";
+ my $tmpdir="$AMANDA_DBGDIR";
+ my $amandahomedir="$localstatedir/amanda";
+-my $templatedir="$amdatadir/template.d"; #rpm install template files here
++my $templatedir="${amdatadir}-common/template.d"; #rpm install template files here
+ my $def_tapedev="file:$amandahomedir/vtapes";
+ 
+ my $amanda_user="$Amanda::Constants::CLIENT_LOGIN";
+@@ -417,7 +417,7 @@ sub create_customconf{
+ 
+ 
+ sub check_xinetd{
+-    &mprint ("/var/lib/amanda/example/xinetd.amandaserver contains the latest Amanda server daemon configuration.\n");
++    &mprint ("/usr/share/doc/amanda-server/examples/xinetd.amandaserver contains the latest Amanda server daemon configuration.\n");
+     &mprint ("Please merge it to /etc/xinetd.d/amandaserver.\n");
+ }
+ 

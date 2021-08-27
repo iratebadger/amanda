@@ -1,0 +1,15 @@
+Subject: Fix amserverconfig path
+Author: Bdale Garbee <bdale@gag.com>
+Index: amanda.git/server-src/amserverconfig.pl
+===================================================================
+--- amanda.git.orig/server-src/amserverconfig.pl	2017-01-15 19:16:28.469991342 +0000
++++ amanda.git/server-src/amserverconfig.pl	2017-01-15 19:16:28.465991337 +0000
+@@ -33,7 +33,7 @@ use Amanda::Constants;
+ 
+ my $confdir="$CONFIG_DIR";
+ my $tmpdir="$AMANDA_DBGDIR";
+-my $amandahomedir="$localstatedir/lib/amanda";
++my $amandahomedir="$localstatedir/amanda";
+ my $templatedir="$amdatadir/template.d"; #rpm install template files here
+ my $def_tapedev="file:$amandahomedir/vtapes";
+ 

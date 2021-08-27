@@ -1,0 +1,34 @@
+Description: Fix various lintian errors relating to man pages, including line breaks, non-standard FHS paths, etc.
+Author: Bill Blough <devel@blough.us>
+
+Index: amanda.git/man/amanda.conf.5
+===================================================================
+--- amanda.git.orig/man/amanda.conf.5	2017-12-15 15:47:05.726096488 +0000
++++ amanda.git/man/amanda.conf.5	2017-12-15 15:51:32.090303525 +0000
+@@ -757,7 +757,7 @@ Default:
+ \fBindexdir\fR \fIstring\fR
+ .RS 4
+ Default
+-\fI"/usr/adm/amanda/index"\fR\&. The directory where index files (backup image catalogues) are stored\&. Index files are only generated for filesystems whose
++\fI"<CONFIG_DIR>/index"\fR\&. The directory where index files (backup image catalogues) are stored\&. Index files are only generated for filesystems whose
+ \fBdumptype\fR
+ has the
+ \fBindex\fR
+@@ -767,7 +767,7 @@ option enabled\&.
+ \fBinfofile\fR \fIstring\fR
+ .RS 4
+ Default:
+-\fI"/usr/adm/amanda/curinfo"\fR\&. The file or directory name for the historical information database\&. If Amanda was configured to use DBM databases, this is the base file name for them\&. If it was configured to use text formatted databases (the default), this is the base directory and within here will be a directory per client, then a directory per disk, then a text file of data\&.
++\fI"<CONFIG_DIR>/curinfo"\fR\&. The file or directory name for the historical information database\&. If Amanda was configured to use DBM databases, this is the base file name for them\&. If it was configured to use text formatted databases (the default), this is the base directory and within here will be a directory per client, then a directory per disk, then a text file of data\&.
+ .RE
+ .PP
+ \fBinparallel\fR \fIint\fR
+@@ -810,7 +810,7 @@ Default: not set\&. When set, this direc
+ \fBlogdir\fR \fIstring\fR
+ .RS 4
+ Default:
+-\fI"/usr/adm/amanda"\fR\&. The directory for the
++\fI"<CONFIG_DIR>"\fR\&. The directory for the
+ \fBamdump\fR
+ and
+ \fBlog\fR

@@ -1,0 +1,20 @@
+* Fix bug 551564 and submit patch to the upstream.
+* Bug 724075: submit extended patch file fix-misc-typos to the
+   upstream.  
+  Upstream accepted parcially the patch.  The man pages need to be
+  updated on the source that is located in man/xml-source/*.xml
+  Check for next version or upstream repo before closing bug.
+* Bug 732017: Just add a Depends to amanda-client.
+* Bug 709639: All my servers have backup alias.  Is this an user
+   error?  Should I close the Bug? Pinged user.
+* Bug 700594: Not a bug?  User error?
+  Need to check on zilda.
+* Bug 688466: Implicit patch, apply it and submit to upstream.
+  Sent to upstream.
+* Bug 687312: Ping user to see if is still relevant.
+  Pinged user at 2008-08-28
+* Bug 208977: Ping user to see if is still relevant.
+  Pinged user at 2008-08-28.
+* Bug: doesn't build two times in a row.
+
+* Rever bug reports e tentar fechar-los.

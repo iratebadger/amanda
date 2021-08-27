@@ -1,0 +1,9 @@
+amanda-client: setuid-binary usr/lib/amanda/application/amgtar 4754 root/backup
+amanda-client: setuid-binary usr/lib/amanda/application/amstar 4754 root/backup
+amanda-client: setuid-binary usr/lib/amanda/calcsize 4754 root/backup
+amanda-client: setuid-binary usr/lib/amanda/killpgrp 4754 root/backup
+amanda-client: setuid-binary usr/lib/amanda/rundump 4754 root/backup
+amanda-client: setuid-binary usr/lib/amanda/runtar 4754 root/backup
+amanda-client: non-standard-dir-perm var/lib/amanda/ 0770 != 0755
+amanda-client: non-standard-dir-perm var/lib/amanda/gnutar-lists/ 0770 != 0755
+amanda-client: possible-gpl-code-linked-with-openssl

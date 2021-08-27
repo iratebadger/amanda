@@ -1,0 +1,7 @@
+# This is an example for a crontab entry for automated backup with amanda
+# With these cron lines, Amanda will check that the correct tape is in
+# the drive every weekday afternoon at 4pm (if it isn't, all the
+# operators will get mail).  At 12:45am that night the dumps will be run. 
+0 16 * * 1-5	/usr/sbin/amcheck -m DailySet1
+45 0 * * 2-6	/usr/sbin/amdump DailySet1
+

@@ -1,0 +1,49 @@
+# translation of amanda 1:2.5.0p2-1_templates.po to Dutch
+# This file is distributed under the same license as the amanda package.
+# Please see debian/copyright.
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+# Luk Claes <luk.claes(AT)ugent(DOT)be>, 2004
+# This is an unofficial translation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: amanda 1:2.5.0p2-1\n"
+"Report-Msgid-Bugs-To: amanda@packages.debian.org\n"
+"POT-Creation-Date: 2008-04-16 01:13-0600\n"
+"PO-Revision-Date: 2006-06-18 20:45+0100\n"
+"Last-Translator: Kurt De Bree <kdebree(AT)telenet(DOT)be>\n"
+"Language-Team: Debian l10n Dutch <debian-l10n-dutch@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "Please merge /var/lib/amandates and /var/lib/amanda/amandates"
+msgstr "Voeg /var/lib/amandates en /var/lib/amanda/amandates samen."
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"You have both /var/lib/amandates and /var/lib/amanda/amandates. Please "
+"review the files, and merge the contents you care about to the /var/lib/"
+"amanda/amandates location, and remove the old file /var/lib/amandates."
+msgstr ""
+"Zowel /var/lib/amandates als /var/lib/amanda/amandates zijn op uw "
+"systeemaanwezig. Kijk deze bestanden na en combineer de inhoud u belangrijk "
+"vindt, in /var/lib/amanda/amandates, en verwijder het oude bestand /var/lib/"
+"amandates."

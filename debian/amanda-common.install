@@ -1,0 +1,252 @@
+debian/amandahosts               /etc/
+example/template.d/*             /usr/share/amanda-common/template.d/
+usr/lib/amanda/ambind
+usr/lib/amanda/amadmin_perl
+usr/lib/amanda/amanda-sh-lib.sh
+usr/lib/amanda/ambackupd
+usr/lib/amanda/amcheck-device
+usr/lib/amanda/amdumpd
+usr/lib/amanda/amndmjob
+usr/lib/amanda/chunker
+usr/lib/*/amanda/libamanda-3.5*.so
+usr/lib/*/amanda/libamanda.a
+usr/lib/*/amanda/libamandad-3.5*.so
+usr/lib/*/amanda/libamandad.a
+usr/lib/*/amanda/libamandad.la
+usr/lib/*/amanda/libamandad.so
+usr/lib/*/amanda/libamanda.la
+usr/lib/*/amanda/libamanda.so
+usr/lib/*/amanda/libamar-3.5*.so
+usr/lib/*/amanda/libamar.a
+usr/lib/*/amanda/libamar.la
+usr/lib/*/amanda/libamar.so
+usr/lib/*/amanda/libamclient-3.5*.so
+usr/lib/*/amanda/libamclient.a
+usr/lib/*/amanda/libamclient.la
+usr/lib/*/amanda/libamclient.so
+usr/lib/*/amanda/libamdevice-3.5*.so
+usr/lib/*/amanda/libamdevice.a
+usr/lib/*/amanda/libamdevice.la
+usr/lib/*/amanda/libamdevice.so
+usr/lib/*/amanda/libamglue-3.5*.so
+usr/lib/*/amanda/libamglue.a
+usr/lib/*/amanda/libamglue.la
+usr/lib/*/amanda/libamglue.so
+usr/lib/*/amanda/libamserver-3.5*.so
+usr/lib/*/amanda/libamserver.a
+usr/lib/*/amanda/libamserver.la
+usr/lib/*/amanda/libamserver.so
+usr/lib/*/amanda/libamxfer-3.5*.so
+usr/lib/*/amanda/libamxfer.a
+usr/lib/*/amanda/libamxfer.la
+usr/lib/*/amanda/libamxfer.so
+usr/lib/*/amanda/libndmjob-3.5*.so
+usr/lib/*/amanda/libndmjob.a
+usr/lib/*/amanda/libndmjob.la
+usr/lib/*/amanda/libndmjob.so
+usr/lib/*/amanda/libndmlib-3.5*.so
+usr/lib/*/amanda/libndmlib.a
+usr/lib/*/amanda/libndmlib.la
+usr/lib/*/amanda/libndmlib.so
+usr/lib/amanda/ndmjob
+usr/lib/amanda/noop
+usr/lib/*/amanda/perl/Amanda/Amdump.pm
+usr/lib/*/amanda/perl/Amanda/Amflush.pm
+usr/lib/*/amanda/perl/Amanda/Amservice.pm
+usr/lib/*/amanda/perl/Amanda/Application.pm
+usr/lib/*/amanda/perl/Amanda/Application/Zfs.pm
+usr/lib/*/amanda/perl/Amanda/Archive.pm
+usr/lib/*/amanda/perl/Amanda/BigIntCompat.pm
+usr/lib/*/amanda/perl/Amanda/Changer/aggregate.pm
+usr/lib/*/amanda/perl/Amanda/Changer/diskflat.pm
+usr/lib/*/amanda/perl/Amanda/Changer/disk.pm
+usr/lib/*/amanda/perl/Amanda/Changer/multi.pm
+usr/lib/*/amanda/perl/Amanda/Changer/ndmp.pm
+usr/lib/*/amanda/perl/Amanda/Changer/null.pm
+usr/lib/*/amanda/perl/Amanda/Changer.pm
+usr/lib/*/amanda/perl/Amanda/Changer/rait.pm
+usr/lib/*/amanda/perl/Amanda/Changer/robot.pm
+usr/lib/*/amanda/perl/Amanda/Changer/single.pm
+usr/lib/*/amanda/perl/Amanda/CheckDump.pm
+usr/lib/*/amanda/perl/Amanda/Chunker/Controller.pm
+usr/lib/*/amanda/perl/Amanda/Chunker/Protocol.pm
+usr/lib/*/amanda/perl/Amanda/Chunker/Scribe.pm
+usr/lib/*/amanda/perl/Amanda/Cleanup.pm
+usr/lib/*/amanda/perl/Amanda/ClientService.pm
+usr/lib/*/amanda/perl/Amanda/Cmdfile.pm
+usr/lib/*/amanda/perl/Amanda/Cmdline.pm
+usr/lib/*/amanda/perl/Amanda/Config/FoldingHash.pm
+usr/lib/*/amanda/perl/Amanda/Config.pm
+usr/lib/*/amanda/perl/Amanda/Constants.pm
+usr/lib/*/amanda/perl/Amanda/Curinfo/Info.pm
+usr/lib/*/amanda/perl/Amanda/Curinfo.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog.pm
+usr/lib/*/amanda/perl/Amanda/DB.pm
+usr/lib/*/amanda/perl/Amanda/Debug.pm
+usr/lib/*/amanda/perl/Amanda/Device.pm
+usr/lib/*/amanda/perl/Amanda/Disklist.pm
+usr/lib/*/amanda/perl/Amanda/Extract.pm
+usr/lib/*/amanda/perl/Amanda/Feature.pm
+usr/lib/*/amanda/perl/Amanda/FetchDump/Application.pm
+usr/lib/*/amanda/perl/Amanda/FetchDump/ClientApplication.pm
+usr/lib/*/amanda/perl/Amanda/FetchDump/Local.pm
+usr/lib/*/amanda/perl/Amanda/FetchDump.pm
+usr/lib/*/amanda/perl/Amanda/Header.pm
+usr/lib/*/amanda/perl/Amanda/Holding.pm
+usr/lib/*/amanda/perl/Amanda/Index.pm
+usr/lib/*/amanda/perl/Amanda/Interactivity/email.pm
+usr/lib/*/amanda/perl/Amanda/Interactivity.pm
+usr/lib/*/amanda/perl/Amanda/Interactivity/stdin.pm
+usr/lib/*/amanda/perl/Amanda/Interactivity/tty_email.pm
+usr/lib/*/amanda/perl/Amanda/Interactivity/tty.pm
+usr/lib/*/amanda/perl/Amanda/IPC/Binary.pm
+usr/lib/*/amanda/perl/Amanda/IPC/LineProtocol.pm
+usr/lib/*/amanda/perl/Amanda/Label.pm
+usr/lib/*/amanda/perl/Amanda/Logfile.pm
+usr/lib/*/amanda/perl/Amanda/MainLoop.pm
+usr/lib/*/amanda/perl/Amanda/Message.pm
+usr/lib/*/amanda/perl/Amanda/NDMP.pm
+usr/lib/*/amanda/perl/Amanda/Paths.pm
+usr/lib/*/amanda/perl/Amanda/Policy.pm
+usr/lib/*/amanda/perl/Amanda/Process.pm
+usr/lib/*/amanda/perl/Amanda/Recovery/Clerk.pm
+usr/lib/*/amanda/perl/Amanda/Recovery/Planner.pm
+usr/lib/*/amanda/perl/Amanda/Recovery.pm
+usr/lib/*/amanda/perl/Amanda/Recovery/Scan.pm
+usr/lib/*/amanda/perl/Amanda/Report/human.pm
+usr/lib/*/amanda/perl/Amanda/Report/json.pm
+usr/lib/*/amanda/perl/Amanda/Report/json_raw.pm
+usr/lib/*/amanda/perl/Amanda/Report.pm
+usr/lib/*/amanda/perl/Amanda/Report/postscript.pm
+usr/lib/*/amanda/perl/Amanda/Report/xml.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Amcheck.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Configs.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Dles.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Dumps.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Labels.pm
+usr/lib/*/amanda/perl/Amanda/Restore.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Report.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Runs.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Services.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Status.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Storages/Labels.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Storages.pm
+usr/lib/*/amanda/perl/Amanda/Rest/Version.pm
+usr/lib/*/amanda/perl/Amanda/ScanInventory.pm
+usr/lib/*/amanda/perl/Amanda/Script_App.pm
+usr/lib/*/amanda/perl/Amanda/Script.pm
+usr/lib/*/amanda/perl/Amanda/Service/Amidxtaped.pm
+usr/lib/*/amanda/perl/Amanda/Service.pm
+usr/lib/*/amanda/perl/Amanda/Service/Restore.pm
+usr/lib/*/amanda/perl/Amanda/Status.pm
+usr/lib/*/amanda/perl/Amanda/Storage.pm
+usr/lib/*/amanda/perl/Amanda/Tapelist.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Controller.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Protocol.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Scan/lexical.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Scan/oldest.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Scan.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Scan/traditional.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Scribe.pm
+usr/lib/*/amanda/perl/Amanda/Taper/Worker.pm
+usr/lib/*/amanda/perl/Amanda/Tests.pm
+usr/lib/*/amanda/perl/Amanda/Util.pm
+usr/lib/*/amanda/perl/Amanda/Vault.pm
+usr/lib/*/amanda/perl/Amanda/Xfer.pm
+usr/lib/*/amanda/perl/Amanda/XferServer.pm
+usr/lib/*/amanda/perl/auto/Amanda/Application/libApplication.la
+usr/lib/*/amanda/perl/auto/Amanda/Application/libApplication.so
+usr/lib/*/amanda/perl/auto/Amanda/Archive/libArchive.la
+usr/lib/*/amanda/perl/auto/Amanda/Archive/libArchive.so
+usr/lib/*/amanda/perl/auto/Amanda/Cmdfile/libCmdfile.la
+usr/lib/*/amanda/perl/auto/Amanda/Cmdfile/libCmdfile.so
+usr/lib/*/amanda/perl/auto/Amanda/Cmdline/libCmdline.la
+usr/lib/*/amanda/perl/auto/Amanda/Cmdline/libCmdline.so
+usr/lib/*/amanda/perl/auto/Amanda/Config/libConfig.la
+usr/lib/*/amanda/perl/auto/Amanda/Config/libConfig.so
+usr/lib/*/amanda/perl/auto/Amanda/Debug/libDebug.la
+usr/lib/*/amanda/perl/auto/Amanda/Debug/libDebug.so
+usr/lib/*/amanda/perl/auto/Amanda/Device/libDevice.la
+usr/lib/*/amanda/perl/auto/Amanda/Device/libDevice.so
+usr/lib/*/amanda/perl/auto/Amanda/Disklist/libDisklist.la
+usr/lib/*/amanda/perl/auto/Amanda/Disklist/libDisklist.so
+usr/lib/*/amanda/perl/auto/Amanda/Feature/libFeature.la
+usr/lib/*/amanda/perl/auto/Amanda/Feature/libFeature.so
+usr/lib/*/amanda/perl/auto/Amanda/Header/libHeader.la
+usr/lib/*/amanda/perl/auto/Amanda/Header/libHeader.so
+usr/lib/*/amanda/perl/auto/Amanda/IPC/Binary/libBinary.la
+usr/lib/*/amanda/perl/auto/Amanda/IPC/Binary/libBinary.so
+usr/lib/*/amanda/perl/auto/Amanda/Logfile/libLogfile.la
+usr/lib/*/amanda/perl/auto/Amanda/Logfile/libLogfile.so
+usr/lib/*/amanda/perl/auto/Amanda/MainLoop/libMainLoop.la
+usr/lib/*/amanda/perl/auto/Amanda/MainLoop/libMainLoop.so
+usr/lib/*/amanda/perl/auto/Amanda/NDMP/libNDMP.la
+usr/lib/*/amanda/perl/auto/Amanda/NDMP/libNDMP.so
+usr/lib/*/amanda/perl/auto/Amanda/Tapelist/libTapelist.la
+usr/lib/*/amanda/perl/auto/Amanda/Tapelist/libTapelist.so
+usr/lib/*/amanda/perl/auto/Amanda/Tests/libTests.la
+usr/lib/*/amanda/perl/auto/Amanda/Tests/libTests.so
+usr/lib/*/amanda/perl/auto/Amanda/Util/libUtil.la
+usr/lib/*/amanda/perl/auto/Amanda/Util/libUtil.so
+usr/lib/*/amanda/perl/auto/Amanda/Xfer/libXfer.la
+usr/lib/*/amanda/perl/auto/Amanda/Xfer/libXfer.so
+usr/lib/*/amanda/perl/auto/Amanda/XferServer/libXferServer.la
+usr/lib/*/amanda/perl/auto/Amanda/XferServer/libXferServer.so
+usr/lib/amanda/restore
+usr/lib/amanda/rest-server/bin/app-dancer2.pl
+usr/lib/amanda/rest-server/bin/app.pl
+usr/lib/amanda/rest-server/config-dancer/config.yml
+usr/lib/amanda/rest-server/config.yml
+usr/lib/amanda/rest-server/environments/development.yml
+usr/lib/amanda/rest-server/environments/production.yml
+usr/lib/amanda/rest-server/lib/Amanda/Rest.pm
+usr/lib/amanda/rest-server/public/404.html
+usr/lib/amanda/rest-server/public/500.html
+usr/lib/amanda/rest-server/public/css/error.css
+usr/lib/amanda/rest-server/public/css/style.css
+usr/lib/amanda/rest-server/public/dispatch.cgi
+usr/lib/amanda/rest-server/public/dispatch.fcgi
+usr/lib/amanda/rest-server/public/favicon.ico
+usr/lib/amanda/rest-server/public/images/perldancer-bg.jpg
+usr/lib/amanda/rest-server/public/images/perldancer.jpg
+usr/lib/amanda/rest-server/public/javascripts/jquery.js
+usr/lib/amanda/rest-server/views/index.tt
+usr/lib/amanda/rest-server/views/layout/main.tt
+usr/lib/amanda/senddiscover
+usr/lib/amanda/teecount
+usr/sbin/amaddclient
+usr/sbin/amaespipe
+usr/sbin/amarchiver
+usr/sbin/amcrypt
+usr/sbin/amcrypt-ossl
+usr/sbin/amcrypt-ossl-asym
+usr/sbin/amcryptsimple
+usr/sbin/amdevcheck
+usr/sbin/amdump_client
+usr/sbin/amgpgcrypt
+usr/sbin/amserverconfig
+usr/sbin/amservice
+usr/sbin/amvault
+usr/share/amanda/ChangeLog      usr/share/doc/amanda-common/
+usr/share/amanda/COPYRIGHT                             /usr/share/doc/amanda-common/
+usr/share/amanda/example/amanda-client.conf            /usr/share/doc/amanda-common/
+usr/share/amanda/example/amanda-client-postgresql.conf /usr/share/doc/amanda-common/
+usr/share/amanda/example/amandaclient.xml              /usr/share/doc/amanda-common/
+usr/share/amanda/example/amanda.conf                   /usr/share/doc/amanda-common/
+usr/share/amanda/example/amandaserver.xml              /usr/share/doc/amanda-common/
+usr/share/amanda/example/chg-multi.conf                /usr/share/doc/amanda-common/
+usr/share/amanda/example/chg-scsi.conf                 /usr/share/doc/amanda-common/
+usr/share/amanda/example/disklist                      /usr/share/doc/amanda-common/
+usr/share/amanda/example/inetd.conf.amandaclient       /usr/share/doc/amanda-common/
+usr/share/amanda/example/inetd.conf.amandaserver       /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/3hole.ps      /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/8.5x11.ps     /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/DIN-A4.ps     /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/DLT-A4.ps     /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/DLT.ps        /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/EXB-8500.ps   /usr/share/doc/amanda-common/
+usr/share/amanda/example/label-templates/HP-DAT.ps     /usr/share/doc/amanda-common/
+usr/share/amanda/example/xinetd.amandaclient           /usr/share/doc/amanda-common/
+usr/share/amanda/example/xinetd.amandaserver           /usr/share/doc/amanda-common/
+usr/share/amanda/NEWS                                  /usr/share/doc/amanda-common/
+usr/share/amanda/ReleaseNotes                          /usr/share/doc/amanda-common/

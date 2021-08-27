@@ -1,0 +1,53 @@
+amanda for DEBIAN
+-----------------
+
+To make a client work using SSH transport do:
+
+  Copy the contents of id_rsa_amanda.pub from backup@amanda-server
+  into ~backup/.ssh/authorized_keys
+
+      mkdir -p ~backup/.ssh
+      echo -n 'from="XXX.XXX.XXX.XXX",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/lib/amanda/amandad -auth=ssh amdump amindexd amidxtaped" ' >> ~backup/.ssh/authorized_keys
+      cat id_rsa_amanda.pub >> ~backup/.ssh/authorized_keys
+
+  Edit the autorized_keys to replace XXX.XXX.XXX.XXX with the IP of
+  the backup server.
+
+  Change the shell of the backup account from /bin/nologin to /bin/bash.
+
+      chsh -s /bin/bash backup
+
+  Test in the server that "amcheck $CONF -c $CLIENT" works
+
+For restores run as root:
+
+scp backup@amanda-server:.ssh/id_rsa_amanda /root/.ssh/id_rsa_amanda
+amrecover -s amanda-server -t amanda-server -o "auth=ssh" -o "ssh-keys=/root/.ssh/id_rsa_amanda"
+
+On amanda-server:
+
+      echo -n 'from="XXX.XXX.XXX.XXX",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/lib/amanda/amandad -auth=ssh amdump amindexd amidxtaped" ' >> ~backup/.ssh/authorized_keys
+      cat id_rsa_amanda.pub >> ~backup/.ssh/authorized_keys
+
+  Edit the autorized_keys to replace XXX.XXX.XXX.XXX with the IP of
+  the amanda-client.
+
+  When finished the restore, do not forget to delete the entry on authorized_keys.
+
+- - - - -
+
+Notes on making amanda-client work on a Debian system
+
+To get indexing (or specifically amrecover) to work right two things need
+to be done:
+
+1. If you're using tcpd, make sure to edit the server's /etc/hosts.allow and 
+   allow all client machines into the daemon amandad
+
+2. Edit the server(s) ~backup/.amandahosts and add an entry like:
+   "<client_hostname>   root"
+
+As always: for more complex setups consult the manpages and available
+documentation in /usr/share/doc/amanda-common ;-) 
+
+ -- Jose M Calhariz <calhariz@debian.org>, Sun, 22 Aug 2021 16:14:26 +0100

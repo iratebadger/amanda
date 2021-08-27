@@ -1,0 +1,5 @@
+debian/activate-devpay.1
+debian/amoldrecover.8
+debian/tmp/usr/share/man/man5/*.5
+debian/tmp/usr/share/man/man7/*.7
+debian/tmp/usr/share/man/man8/*.8

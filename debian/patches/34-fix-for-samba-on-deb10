@@ -1,0 +1,27 @@
+Author: Diego Zuccato <diego.zuccato@unibo.it>
+Description: Fix a problem found with samba on Debian 10 aka buster.
+
+Found on mailing-lists amanda-users
+
+May need patch 36-*
+
+Index: amanda.git/application-src/amsamba.pl
+===================================================================
+--- amanda.git.orig/application-src/amsamba.pl	2018-07-22 06:56:41.981974035 +0100
++++ amanda.git/application-src/amsamba.pl	2019-07-17 20:54:02.369149536 +0100
+@@ -462,6 +462,7 @@ sub command_selfcheck {
+ 	debug("stderr: " . $_);
+ 	next if /^Domain=/;
+ 	next if /^WARNING/g;
++	next if /^Unable to initialize messaging context/g;
+ 	# message if samba server is configured with 'security = share'
+ 	next if /Server not using user level security and no password supplied./;
+ 	$self->print_to_server("smbclient: $_",
+@@ -554,6 +555,7 @@ sub parse_estimate {
+ 	next if /^Domain=/;
+ 	next if /dumped \d+ files and directories/;
+ 	next if /^WARNING/g;
++	next if /^Unable to initialize messaging context/g;
+ 	# message if samba server is configured with 'security = share'
+ 	next if /Server not using user level security and no password supplied./;
+ 	debug("stderr: $_");

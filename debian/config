@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+# if both files exist, suggest they merge them
+# if only one exists, the postinst moves it
+if [ -f /var/lib/amandates ]; then
+  if [ -f /var/lib/amanda/amandates ]; then
+    db_input medium amanda-common/merge_amandates || true
+    db_go
+  fi
+fi

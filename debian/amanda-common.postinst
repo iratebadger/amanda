@@ -1,0 +1,64 @@
+#!/bin/sh
+set -e
+
+. /usr/share/debconf/confmodule
+
+if [ "$1" = configure ]; then
+	if ! getent passwd backup; then
+		adduser --quiet --system --no-create-home --home /var/backups \
+			--shell /bin/sh --uid 34 --gid 34 backup
+	fi
+
+	if [ ! -f /var/backups/.profile ]; then
+		echo 'PATH="$PATH:/usr/sbin"' > /var/backups/.profile
+	fi
+
+	groupadd -f -g 34 backup
+	groupadd -f -g 26 tape
+
+	adduser backup disk
+	adduser backup tape
+
+	# in case we get installed first
+	if [ ! -d /var/lib/amanda ]; then
+		mkdir -p /var/lib/amanda
+	fi
+
+	# try to handle a /var/lib/amandates file, since we created it
+	# incorrectly in previous versions of the amanda packages for Debian
+	if [ -f /var/lib/amandates ]; then
+  		if [ ! -f /var/lib/amanda/amandates ]; then
+    			mv /var/lib/amandates /var/lib/amanda/amandates
+  		fi
+	fi
+
+	# make sure amandates exists and has the right perms
+	if [ ! -f /var/lib/amanda/amandates ]; then
+		touch /var/lib/amanda/amandates
+	fi
+	chown backup:backup /var/lib/amanda/amandates
+
+	# make sure user backup has a home directory
+	if [ ! -d ~backup ]; then
+		mkdir -p ~backup
+	fi
+
+	# make sure there is a .amandahosts symlink
+	if [ ! -L ~backup/.amandahosts ]; then
+  		ln -sf /etc/amandahosts ~backup/.amandahosts
+	fi
+
+	# make sure /var/log/amanda exists
+	if [ ! -d /var/log/amanda ]; then
+		mkdir -p /var/log/amanda
+	fi
+
+	chown backup:backup ~backup/.amandahosts /etc/amandahosts \
+		/var/log/amanda
+	chmod 600 ~backup/.amandahosts /etc/amandahosts
+	chmod 770 /var/log/amanda
+fi
+
+update-inetd --add "amanda stream tcp nowait backup /usr/lib/amanda/amandad amandad -auth=bsdtcp amdump amindexd amidxtaped"
+
+#DEBHELPER#

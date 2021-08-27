@@ -1,0 +1,228 @@
+amanda for DEBIAN
+-----------------
+
+Since every Amanda installation is different, there is some work you need to
+do to configure your server.  For a simple setup, as root you need to:
+
+1. Create a directory under /etc/amanda for your backup config, we'll assume
+   a name 'DailySet1' as our example.
+
+       mkdir /etc/amanda/DailySet1
+
+   Make sure that /etc/amanda and all the files under it are owner and group
+   backup with directory permissions of 770 and file permissions of 660.
+
+2. populate this directory with config files.  
+
+       cp /usr/share/doc/amanda-server/examples/quick/*
+          /etc/amanda/DailySet1/
+       gunzip /etc/amanda/DailySet1/*.gz
+
+   Edit these files as needed, following the instructions in each file.
+
+3. Make sure that /etc/amanda and all the files under it are owner and group
+   backup with directory permissions of 770 and file permissions of 660.
+
+	chown -R backup:backup /etc/amanda
+
+4. Prepare the "holding disk" if you plan to use one (highly
+   recommended!) by ensuring user backup can access it.  For example
+   use /hdisk/DailySet1, better if /hdisk is a mount point:
+
+        mkdir -p /hdisk/DailySet1
+	chown -R backup:backup /hdisk/DailySet1
+
+5. Change default shell of user backup from nologin to something
+   suitable:
+
+        chsh -s /bin/bash backup
+
+6. Install a suitable crontab for user backup.  If you used DailySet1 as your
+   configuration name, you can just install the provided example.  If you
+   picked some other name, you will obviously need to edit a copy of the
+   example before installing it.
+
+	crontab -u backup /usr/share/doc/amanda-server/examples/crontab.amanda
+
+NOTE:  If you want to backup your server too, you need to treat it as both a
+client *and* a server, see /usr/share/doc/amanda-client/README.Debian for 
+more information.
+
+For more complex setups, consult the manpages and the extra documents and
+example files in /usr/share/doc/amanda-common, or look at www.amanda.org on
+the web.
+
+Setup server for backups using ssh transport.
+
+  As root do:
+
+mkdir ~backup/.ssh
+chown backup: ~backup/.ssh
+sudo -u backup ssh-keygen -f ~backup/.ssh/id_rsa_amanda
+
+  Do not setup a password for the ssh keys
+
+  Now put the ~backup/.ssh/id_rsa_amanda.pub on the clients in
+  authorized_keys, but with some extra security.  Add to the beginning
+  of entry in autorized_keys something like:
+
+from="XXX.XXX.XXX.XXX",no-port-forwarding,no-X11-forwarding,no-agent-forwarding,command="/usr/lib/amanda/amandad -auth=ssh amdump amindexd amidxtaped"
+
+  Where XXX.XXX.XXX.XXX is the ip of the server.
+
+  Please see /usr/share/doc/amanda-client/README.Debian for more
+  details.
+
+
+For restores run as root:
+
+cp ~backup/.ssh/id_rsa_amanda /root/.ssh/id_rsa_amanda
+amrecover -s amanda-server -t amanda-server -o "auth=ssh" -o "ssh-keys=/root/.ssh/id_rsa_amanda"
+
+- - - - -
+Old instructions for auth bsd
+
+Since every Amanda installation is different, there is some work you need to
+do to configure your server.  For a simple setup, as root you need to:
+
+1. Create a directory under /etc/amanda for your backup config, we'll assume
+   a name 'DailySet1' as our example.
+
+	mkdir /etc/amanda/DailySet1
+
+   Make sure that /etc/amanda and all the files under it are owner and group
+   backup with directory permissions of 770 and file permissions of 660.
+
+2. populate this directory with config files.  At a minimum, you need 
+   amanda.conf and disklist.
+
+	cp /usr/share/doc/amanda-server/examples/amanda.conf.gz \
+		/etc/amanda/DailySet1/amanda.conf.gz
+	cp /usr/share/doc/amanda-server/examples/disklist \
+		/etc/amanda/DailySet1/disklist
+	gunzip /etc/amanda/DailySet1/amanda.conf.gz
+
+   Edit these files as needed, following the instructions in each file.
+
+3. Make sure that /etc/amanda and all the files under it are owner and group
+   backup with directory permissions of 770 and file permissions of 660.
+
+	chown -R backup:backup /etc/amanda
+
+3. Prepare the "holding disk" if you plan to use one (highly recommended!) by 
+   ensuring user backup can access it.  See the note below indicating that it
+   may be better to use a subdirectory and not a mount point to avoid having 
+   system artifacts like the lost+found directory confuse things.
+
+	chown -R backup:backup <holding disk location>
+
+4. Install a suitable crontab for user backup.  If you used DailySet1 as your
+   configuration name, you can just install the provided example.  If you
+   picked some other name, you will obviously need to edit a copy of the
+   example before installing it.
+
+	crontab -u backup /usr/share/doc/amanda-server/examples/crontab.amanda
+
+To use all of Amanda's features, you probably also want to put each client
+machine's root user in the .rhosts or .amandahosts for ~backup on the server 
+machine.  On Debian systems, this is usually linked to /etc/amandahosts, but
+if you have clients running other operating systems you'll have to find the
+right place yourself.
+
+NOTE:  If you want to backup your server too, you need to treat it as both a
+client *and* a server, see /usr/share/doc/amanda-client/README.Debian for 
+more information.
+
+For more complex setups, consult the manpages and the extra documents and
+example files in /usr/share/doc/amanda-common, or look at www.amanda.org on
+the web.
+
+Another Note: if you use floppy tapes you have to use the sftape interface 
+for use with ftape(>=3.03).
+
+Jean Pierre LeJacq <jplejacq@mail.quoininc.com> reports the following about
+his experience using ftape:
+
+  I'm using ftape successfully with amanda but only after
+  struggling.  The crucial trick was to set the block size with with ftmt to 
+  be the same as used by amanda.  I've implemented this with this entry in
+  /etc/modules.conf:
+  
+    alias char-major-27 zftape
+    pre-install zftape /sbin/swapout 5
+    post-install zftape /bin/ftmt -f /dev/nzqft0 setblk 32768
+
+To ease use with firewalls, Amanda has been built with options restricting the
+use of TCP to the port range 50000-50100,  and UDP to the port range 840-860.
+
+Sam Johnston <samj@samj.net> reported problems with an Amanda server on which
+bastille was used with the "restrict system resources" option.  See bug
+118616 in the Debian bug tracking system for more information.
+
+If you choose to use the SSH authentication method and associated transport,
+please be aware that there may be problems if /usr/lib/amanda/dumper is suid.
+You can fix this on your server with chmod u-s /usr/lib/amanda/dumper, or
+investigate dpkg-statoverride.
+
+Concerns have been expressed about the reliability of 'dump' as a backup tool
+on live Linux systems.  Nothing can guarantee a consistent and meaningful 
+backup of a live filesystem under all circumstances, and the maintainer of
+these packages uses dump with good results.  
+
+The tar utility is 'essential' in Debian and so will always be around, is not 
+tied to any specific filesystem type, and there are entries in the default 
+amanda.conf file defining dump types using tar.  This may therefore be a good
+option to consider.
+
+Note that if you are using tar with amanda, and getting errors about missing
+exclude files (particularly on upgrades from older versions), then you may
+need to update your dumptypes definition to explicitly indicate that the 
+exclude file is optional, as shown in this example:
+
+	define dumptype userdata-lowvalue {
+	   program "GNUTAR"
+	   comment "Low value user data dumped with tar"
+	   options compress-fast, index
+	   exclude list optional ".amandaexclude"
+	   priority low
+	}
+
+- - - - -
+
+If you see backups failing with an error like:
+
+	driver: FATAL flush line 1: syntax error (skipping != FLUSH)
+
+The problem may be that some versions of Amanda around 2.5.2 are not 
+happy if there are unexpected contents in the holdingdisk you have
+defined on the server.  This can occur, for example, if you are using
+the mount point of a separate filesystem that contains a lost+found
+directory.  The quick fix is to create a subdirectory in that partition
+for Amanda to use that will have no such unexpected contents.  For more 
+info on this issue see:
+
+	http://forums.zmanda.com/archive/index.php/t-591.html
+
+- - - - -
+
+If you see things like this in dmesg:
+
+    INFO: task ammt:9839 blocked for more than 120 seconds.
+    "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+
+This information from Marc Schaefer may relevant:
+
+> AFAIK it's because mtio operations are done in D state (uninterruptible
+> sleep).
+> 
+> And except for mtio operations which may last more than two minutes,
+> nothing in the usual kernel operation will last that long.
+> 
+> Solutions:
+>	- either fix mtio to be interruptible (which may well cause problems
+>	  because e.g. SCSI reselection might happen later)
+>	- use the proposed work-around
+>	- ignore those messages in your logcheck.
+
+
+ -- Jose M Calhariz <calhariz@debian.org>, Sun, 22 Aug 2021 16:07:05 +0100

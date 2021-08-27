@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+# if a .amandahosts exists and is not a symlink, move it to /etc
+if [ ! -L ~backup/.amandahosts ]
+then
+	if [ -f ~backup/.amandahosts ]
+	then
+		mv -f ~backup/.amandahosts /etc/amandahosts
+	fi
+fi
+
+#DEBHELPER#

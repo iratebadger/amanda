@@ -1,0 +1,60 @@
+# amanda translation to spanish
+# Copyright (C) 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the package.
+#
+# Changes:
+# - Initial translation
+#     Manuel Porras Peralta , 2007
+#
+#
+#  Traductores, si no conoce el formato PO, merece la pena leer la
+#  documentación de gettext, especialmente las secciones dedicadas a este
+#  formato, por ejemplo ejecutando:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+# Equipo de traducción al español, por favor lean antes de traducir
+# los siguientes documentos:
+#
+# - El proyecto de traducción de Debian al español
+#   http://www.debian.org/intl/spanish/
+#   especialmente las notas y normas de traducción en
+#   http://www.debian.org/intl/spanish/notas
+#
+# - La guía de traducción de po's de debconf:
+#   /usr/share/doc/po-debconf/README-trans
+#   o http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+# Si tiene dudas o consultas sobre esta traducción consulte con el último
+# traductor (campo Last-Translator) y ponga en copia a la lista de
+# traducción de Debian al español (<debian-l10n-spanish@lists.debian.org>)
+msgid ""
+msgstr ""
+"Project-Id-Version: amanda\n"
+"Report-Msgid-Bugs-To: amanda@packages.debian.org\n"
+"POT-Creation-Date: 2008-04-16 01:13-0600\n"
+"PO-Revision-Date: 2007-01-29 14:29+0100\n"
+"Last-Translator: Manuel Porras Peralta «Venturi» <venturi.debian@gmail.com>\n"
+"Language-Team: Debian Spanish <debian-l10n-spanish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid "Please merge /var/lib/amandates and /var/lib/amanda/amandates"
+msgstr "Por favor, combine «/var/lib/amandates» y «/var/lib/amanda/amandates»"
+
+#. Type: error
+#. Description
+#: ../templates:1001
+msgid ""
+"You have both /var/lib/amandates and /var/lib/amanda/amandates. Please "
+"review the files, and merge the contents you care about to the /var/lib/"
+"amanda/amandates location, and remove the old file /var/lib/amandates."
+msgstr ""
+"Se han detectado los archivos «/var/lib/amandates» y «/var/lib/amanda/"
+"amandates». Por favor, revíselos, combine los contenidos que necesite en el "
+"archivo «/var/lib/amanda/amandates», y borre el archivo antiguo «/var/lib/"
+"amandates»."

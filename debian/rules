@@ -1,0 +1,88 @@
+#!/usr/bin/make -f
+# Copyright 1998-2011 by Bdale Garbee.  License GPL v2
+#           2016-2017 by Jose M Calhariz. License GPL v2
+
+export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+com=$(CURDIR)/debian/amanda-common
+ser=$(CURDIR)/debian/amanda-server
+cli=$(CURDIR)/debian/amanda-client
+
+triplet := $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+confflags = --prefix=/usr \
+		--bindir=/usr/sbin \
+		--libexecdir=/usr/lib/amanda \
+		--without-amlibexecdir \
+		--without-amperldir \
+		--sysconfdir=/etc \
+		--sharedstatedir=/var/lib \
+		--localstatedir=/var/lib \
+		--with-user=backup \
+		--with-group=backup  \
+		--with-tcpportrange=50000,50100 \
+		--with-udpportrange=840,860 \
+		--with-debugging=/var/log/amanda \
+		--with-gnutar-listdir=/var/lib/amanda/gnutar-lists \
+		--with-amandates=/var/lib/amanda/amandates \
+		--with-index-server=localhost \
+		--with-bsd-security \
+		--with-smbclient=/usr/bin/smbclient \
+		--with-amandahosts \
+		--with-ssh-security \
+        --with-krb5-security \
+		--with-bsdtcp-security \
+		--with-bsdudp-security \
+		--without-ipv6 \
+		--enable-s3-device
+
+%:
+	dh $@ --with autoreconf --parallel
+
+override_dh_auto_configure:
+	# MAILER: Fix for #296022, #475771 and #990080
+	MAILER="/usr/bin/mail" LIBS="-lssl" dh_auto_configure -- $(confflags)
+
+override_dh_install:
+	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/tmp -name '*.la'`
+	dh_install --list-missing
+	cp example/xinetd.amandaserver $(com)/etc/xinetd.d/amanda
+	# Temporary fix for #939411.
+	cat debian/amanda-security.conf > $(cli)/etc/amanda-security.conf
+
+override_dh_fixperms:
+	dh_fixperms
+	chown -R backup:backup debian/*/var/lib/*
+	chmod -R u=rwX,g=rwX,o-rwx debian/*/var/lib/*
+	chown -R backup:backup $(ser)/etc/amanda
+	chmod -R u=rwX,g=rwX,o-rwx $(ser)/etc/amanda
+	chown -R backup:backup $(cli)/var/lib/amanda/gnutar-lists
+	chmod -R u=rwX,g=rwX,o-rwx $(cli)/var/lib/amanda/gnutar-lists
+	chgrp backup \
+		$(cli)/usr/lib/amanda/application/amgtar \
+		$(cli)/usr/lib/amanda/application/amstar \
+		$(cli)/usr/lib/amanda/calcsize \
+		$(cli)/usr/lib/amanda/killpgrp \
+		$(cli)/usr/lib/amanda/rundump \
+		$(cli)/usr/lib/amanda/runtar \
+		$(com)/usr/lib/amanda/ambind \
+		$(ser)/usr/lib/amanda/dumper \
+		$(ser)/usr/lib/amanda/planner \
+		$(ser)/usr/sbin/amcheck
+	chmod u=srwx,g=rx,o=r \
+		$(cli)/usr/lib/amanda/application/amgtar \
+		$(cli)/usr/lib/amanda/application/amstar \
+		$(cli)/usr/lib/amanda/calcsize \
+		$(cli)/usr/lib/amanda/killpgrp \
+		$(cli)/usr/lib/amanda/rundump \
+		$(cli)/usr/lib/amanda/runtar
+	chmod u==srwx,g=rx,o= \
+		$(com)/usr/lib/amanda/ambind
+
+override_dh_makeshlibs:
+	dh_makeshlibs --noscripts
+
+override_dh_perl:
+	dh_perl /usr/lib/$(triplet)/amanda/perl

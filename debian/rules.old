@@ -1,0 +1,147 @@
+#!/usr/bin/make -f
+# Copyright 1998-2011 by Bdale Garbee.  License GPL v2
+#           2016 by Jose M Calhariz. License GPL v2
+
+export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+DPKG_EXPORT_BUILDFLAGS = 1
+-include /usr/share/dpkg/buildflags.mk
+
+r=$(CURDIR)/debian/amanda-common
+s=$(CURDIR)/debian/amanda-server
+c=$(CURDIR)/debian/amanda-client
+
+configure: configure-stamp
+configure-stamp:
+	dh_testdir
+	# pick up latest config files provided by autotools-dev
+	cp -f /usr/share/misc/config.sub config/config.sub
+	cp -f /usr/share/misc/config.guess config/config.guess
+	dh_autoreconf
+	# do we need --{htmldir,dvidir,pdfdir,psdir} to force subdirectories?
+	# should we re-craft this to use --without-server and --without-client,
+	#	and lose the amanda-common package?
+	MAILER=/usr/bin/mail \
+	SSH=/usr/bin/ssh \
+	./configure \
+		--prefix=/usr \
+		--bindir=/usr/sbin \
+		--libexecdir=/usr/lib/amanda \
+		--without-amlibexecdir \
+		--without-amperldir \
+		--sysconfdir=/etc \
+		--sharedstatedir=/var/lib \
+		--localstatedir=/var/lib \
+		--with-user=backup \
+		--with-group=backup  \
+		--with-tcpportrange=50000,50100 \
+		--with-udpportrange=840,860 \
+		--with-debugging=/var/log/amanda \
+		--with-gnutar-listdir=/var/lib/amanda/gnutar-lists \
+		--with-amandates=/var/lib/amanda/amandates \
+		--with-index-server=localhost \
+		--with-bsd-security \
+		--with-smbclient=/usr/bin/smbclient \
+		--with-amandahosts \
+		--with-ssh-security \
+		--with-bsdtcp-security \
+		--with-bsdudp-security \
+		--without-ipv6 \
+		--enable-s3-device
+
+	touch missing
+	touch configure-stamp
+
+build: build-arch build-indep
+build-arch: build-stamp
+build-indep: build-stamp
+build-stamp: configure-stamp
+	dh_testdir
+	MAILER=/usr/bin/mail $(MAKE) CFLAGS="$(CFLAGS) -O2 -g -Wall \
+		-DIGNORE_TAR_ERRORS "
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	[ ! -f Makefile ] || make clean
+	[ ! -f Makefile ] || make distclean
+	-rm -f build-stamp configure-stamp missing config/config.h common-src/genversion
+	-find . -type d -name .deps -exec rm -rf {} \;
+	rm -f config/config.sub config/config.guess
+	dh_autoreconf_clean
+	dh_clean
+
+# call this before packaging for upload when updating template English text
+updatepo:
+	-rm -f debian/po/templates.pot
+	debconf-updatepo
+
+binary-indep: build
+
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs -a
+	make install DESTDIR=$(r)
+	sed -i "/dependency_libs/ s/'.*'/''/" `find $(r)/usr/lib/amanda/ -name '*.la'`
+	install -m 644 debian/amandahosts $(r)/etc/amandahosts
+	install -m 644 debian/amanda-security.conf $(c)/etc/
+	dh_installdocs -a
+	dh_installexamples -a
+	cp ChangeLog $(r)/usr/share/doc/amanda-common/changelog
+	cp example/xinetd.amandaserver $(r)/etc/xinetd.d/amanda
+	dh_installmenu -a
+	dh_installcron -a
+	dh_installchangelogs -a
+	dh_installdebconf -a
+	dh_installman -a
+	dh_strip -a
+	dh_compress -a
+	dh_movefiles -a --sourcedir=debian/amanda-common
+	dh_install -a -X.in
+	dh_link -a
+	rm -r $(r)/usr/share/amanda
+	dh_fixperms -av
+	# fix perms manually
+	chown -R backup:backup debian/*/var/lib/*
+	chmod -R u=rwX,g=rwX,o-rwx debian/*/var/lib/*
+	chown -R backup:backup $(s)/etc/amanda
+	chmod -R u=rwX,g=rwX,o-rwx $(s)/etc/amanda
+	chown -R backup:backup $(c)/var/lib/amanda/gnutar-lists
+	chmod -R u=rwX,g=rwX,o-rwx $(c)/var/lib/amanda/gnutar-lists
+	# .. setuid
+	chown root:backup \
+		$(c)/usr/lib/amanda/application/amgtar \
+		$(c)/usr/lib/amanda/application/amstar \
+		$(c)/usr/lib/amanda/calcsize \
+		$(c)/usr/lib/amanda/killpgrp \
+		$(c)/usr/lib/amanda/rundump \
+		$(c)/usr/lib/amanda/runtar \
+		$(s)/usr/lib/amanda/dumper \
+		$(s)/usr/lib/amanda/planner \
+		$(s)/usr/sbin/amcheck
+	chmod u=srwx,g=rx,o=r \
+		$(c)/usr/lib/amanda/application/amgtar \
+		$(c)/usr/lib/amanda/application/amstar \
+		$(c)/usr/lib/amanda/calcsize \
+		$(c)/usr/lib/amanda/killpgrp \
+		$(c)/usr/lib/amanda/rundump \
+		$(c)/usr/lib/amanda/runtar \
+		$(s)/usr/lib/amanda/dumper \
+		$(s)/usr/lib/amanda/planner \
+		$(s)/usr/sbin/amcheck
+	dh_lintian
+	dh_makeshlibs -pamanda-common --noscripts
+	dh_installdeb -a
+	dh_perl -a usr/lib/amanda/perl
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+binary: binary-indep binary-arch
+.PHONY: configure build-indep build-arch build clean binary-indep binary-arch binary

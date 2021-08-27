@@ -1,0 +1,41 @@
+######################################################################
+# Patches to adapt amanda to Debian
+01-debian-fhs-dumpdates-path-doc
+02-debian-fhs-dumpdates-path-src
+03-debian-fhs-dumpdates-path-examples
+
+fix-amserverconfig-path
+
+07-debian-change-from-amandabackup-to-backup-example
+08-debian-change-from-amandabackup-to-backup-src
+09-debian-change-from-amandabackup-to-backup-doc
+
+#10, 11, 12
+missing-libs-ftbfs.patch
+#13
+fix-amserverconfig-template-path
+#14, 15, 16
+14-debian-fix-lintian-manpage-warnings-conffile.c
+15-debian-fix-lintian-manpage-warnings-amanda.conf.5
+
+
+######################################################################
+# Patches that may or may not be accepted by upstream.
+reproducible-build
+
+20-fix-robot.pm
+22-reproducible-build-fix-shell-capture
+24-for-jose-server
+26-driver-fix-crash
+28-protocol_check
+30-lexical
+32-fix-small-DLE
+34-fix-for-samba-on-deb10
+36-fix-for-samba-on-deb10-part-2
+38-ftbfs-with-gcc-10
+40-examples-quick
+44-add-TI-RPC
+
+######################################################################
+# Patches to debug behaviour
+# 42-experimental

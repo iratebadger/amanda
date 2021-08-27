@@ -1,0 +1,6 @@
+amanda-server: non-standard-dir-perm etc/amanda/ 0770 != 0755
+amanda-server: setuid-binary usr/lib/amanda/dumper 4754 root/backup
+amanda-server: setuid-binary usr/lib/amanda/planner 4754 root/backup
+amanda-server: setuid-binary usr/sbin/amcheck 4754 root/backup
+amanda-server: non-standard-dir-perm var/lib/amanda/ 0770 != 0755
+amanda-server: possible-gpl-code-linked-with-openssl

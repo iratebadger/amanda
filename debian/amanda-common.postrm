@@ -1,0 +1,38 @@
+#!/bin/sh -e
+set -e
+case "$1" in
+  purge)
+	if [ -d /var/log/amanda ]; then
+		rm -rf /var/log/amanda
+	fi
+	if [ -d /var/lib/amanda-gnutar-lists ]; then
+		rm -rf /var/lib/amanda-gnutar-lists
+	fi
+	if [ -d /var/lib/amanda-index ]; then
+		rm -rf /var/lib/amanda-index
+	fi
+	if [ -d /var/lib/amanda ]; then
+		rm -rf /var/lib/amanda
+	fi
+	# keep this around to clean up after old, broken amanda packages
+	# new packages have amandates in /var/lib/amanda...
+	if [ -f /var/lib/amandates ]; then
+		rm -f /var/lib/amandates
+	fi
+
+	rm -f ~backup/.amandahosts
+
+  ;;
+  remove|upgrade|deconfigure)
+  ;;
+
+  failed-upgrade)
+  ;;
+
+  *)
+        echo "unknown argument --> $1" >&2
+        exit 0
+  ;;
+esac
+
+#DEBHELPER#
