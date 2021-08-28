@@ -47,10 +47,10 @@ Depends: adduser,
 Suggests: amanda-server (= ${binary:Version}) | amanda-client (= ${binary:Version}),
 Conflicts: amanda,
 Breaks: amanda-client (<< 1:3.5),
-        amanda-server (<< 1:3.5.1-3~)
+        amanda-server (<< 1:3.5.1-8~)
 Replaces: amanda,
           amanda-client (<< 1:3.5),
-          amanda-server (<< 1:3.5.1-3~)
+          amanda-server (<< 1:3.5.1-8~)
 Description: Advanced Maryland Automatic Network Disk Archiver (Libs)
  This package contains libraries required by the amanda client and
  server packages and includes the documentation.
