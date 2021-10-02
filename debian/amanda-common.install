@@ -81,6 +81,12 @@ usr/lib/*/amanda/perl/Amanda/Constants.pm
 usr/lib/*/amanda/perl/Amanda/Curinfo/Info.pm
 usr/lib/*/amanda/perl/Amanda/Curinfo.pm
 usr/lib/*/amanda/perl/Amanda/DB/Catalog.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2/log.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2/MySQL.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2/PgSQL.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2/SQL.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2/SQLite.pm
+usr/lib/*/amanda/perl/Amanda/DB/Catalog2.pm
 usr/lib/*/amanda/perl/Amanda/DB.pm
 usr/lib/*/amanda/perl/Amanda/Debug.pm
 usr/lib/*/amanda/perl/Amanda/Device.pm
