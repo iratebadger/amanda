@@ -13,6 +13,7 @@ usr/sbin/activate-devpay
 usr/sbin/amadmin
 usr/sbin/amanda-rest-server
 usr/sbin/ambackup
+usr/sbin/amcatalog
 usr/sbin/amcheck
 usr/sbin/amcheckdb
 usr/sbin/amcheckdump
