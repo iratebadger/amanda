@@ -1,9 +1,11 @@
-amanda (1:4.0.0-master) UNRELEASED; urgency=medium
+amanda (1:4.0.0-masterubuntu1) UNRELEASED; urgency=medium
 
   * Pulling the debian packaging over to master.
-  * Removed unneeded patches, merged useful ones, kept deb specific stuff as patches.
+  * Removed unneeded patches, merged useful ones, kept deb specific stuff as patches. 
+  * Fixed dependency files.
+  * Added some missing perl files to the installs
 
- -- Michael C. McMinn <mmcminn@uniondynamic.com>  Thu, 26 Aug 2021 23:30:23 -0400
+ -- Michael C. McMinn <mmcminn@uniondynamic.com>  Sat, 02 Oct 2021 18:02:08 -0400
 
 amanda (1:3.5.1-8) unstable; urgency=medium
 
