@@ -176,15 +176,9 @@ have a server class CPU in the backup server.
 
 ## Where do I get Amanda?
 
-Until early 2019 Amanda, including its source tree, was on SourceForge:
-
-http://sourceforge.net/projects/amanda
-
-Since spring 2019 the main development of the community version happens on GitHub:
+The development of the community version happens on GitHub:
 
 https://github.com/zmanda/amanda
-
-Or see http://www.amanda.org/download.php
 
 Most Linux distributions include amanda rpms or debian packages
 pre-built for various architectures. Pre-built binaries are also
@@ -203,56 +197,19 @@ client machines.
 
 You can read Amanda documentation at:
 
-http://www.amanda.org
+Releases 4.X and newer: https://docs.zmanda.com
+
+Earlier releases: https://legacydocs.zmanda.com
 
 and at the Amanda wiki:
 
 http://wiki.zmanda.com
 
-## Who do I talk to if I have a problem?
+## Where can I get community help?
 
-* You may file Issues at GitHub:
+* You may ask questions by filing Issues on GitHub:
 
 https://github.com/zmanda/amanda/issues
 
-* You can get Amanda help and questions answered from the mailing lists and
-Amanda forums.
-
-Check http://www.amanda.org/support/mailinglists.php
-
-for instructions how to subscribe.
-
-You will receive an email acknowledging your subscription. Keep
-it. Should you ever wish to depart our company, it has unsubscribe
-and other useful information.
-
-* amanda-announce
-
-        The amanda-announce mailing list is for important announcements
-        related to the Amanda Network Backup Manager package, including new
-        versions, contributions, and fixes.  NOTE: the amanda-users list is
-        itself on the amanda-announce distribution, so you only need to
-        subscribe to one of the two lists, not both.
-        To subscribe, send a message to amanda-announce-request@amanda.org.
-
-* amanda-users
-
-        The amanda-users mailing list is for questions and general discussion
-        about the Amanda Network Backup Manager.  NOTE: the amanda-users list
-        is itself on the amanda-announce distribution, so you only need to
-        subscribe to one of the two lists, not both.
-        To subscribe, send a message to amanda-users-request@amanda.org.
-
-* amanda-hackers
-
-        The amanda-hackers mailing list is for discussion of the
-        technical details of the Amanda package, including extensions,
-        ports, bugs, fixes, and alpha testing of new versions.
-        To subscribe, send a message to amanda-hackers-request@amanda.org.
-
-Amanda forums: http://forums.zmanda.com
-
-Amanda Platform Experts: http://wiki.zmanda.com/index.php/Platform_Experts
-
 Backup, Share and Enjoy,
-The Amanda Development Team, 2019
+The Amanda Community Development Team
