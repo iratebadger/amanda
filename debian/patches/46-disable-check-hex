@@ -1,0 +1,23 @@
+Index: amanda-3.5.1/common-src/Makefile.am
+===================================================================
+--- amanda-3.5.1.orig/common-src/Makefile.am	2022-06-19 20:45:44.459098030 +0100
++++ amanda-3.5.1/common-src/Makefile.am	2022-06-19 20:49:08.159830279 +0100
+@@ -247,7 +247,7 @@ libtestutils_la_SOURCES = \
+ # automake-style tests
+ 
+ TESTS = amflock-test event-test amsemaphore-test crc32-test quoting-test \
+-	ipc-binary-test hexencode-test fileheader-test match-test
++	ipc-binary-test fileheader-test match-test
+ noinst_PROGRAMS = $(TESTS)
+ 
+ amflock_test_SOURCES = amflock-test.c
+@@ -270,9 +270,6 @@ quoting_test_LDADD = libamanda.la libtes
+ ipc_binary_test_SOURCES = ipc-binary-test.c
+ ipc_binary_test_LDADD = libamanda.la libtestutils.la
+ 
+-hexencode_test_SOURCES = hexencode-test.c
+-hexencode_test_LDADD = libamanda.la libtestutils.la
+-
+ fileheader_test_SOURCES = fileheader-test.c
+ fileheader_test_LDADD = libamanda.la libtestutils.la
+ 

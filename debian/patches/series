@@ -12,10 +12,11 @@ fix-amserverconfig-path
 
 #10, 11, 12
 #13
-#14, 15, 16
-14-debian-fix-lintian-manpage-warnings-conffile.c
-15-debian-fix-lintian-manpage-warnings-amanda.conf.5
 
+fix-amserverconfig-template-path
+
+14-debian-fix-lintian-manpage-warnings-conffile.c
+#15-debian-fix-lintian-manpage-warnings-amanda.conf.5
 
 ######################################################################
 # Patches that may or may not be accepted by upstream.
@@ -24,7 +25,14 @@ reproducible-build
 34-fix-for-samba-on-deb10
 36-fix-for-samba-on-deb10-part-2
 40-examples-quick
+46-disable-check-hex
+
 
 ######################################################################
-# Patches to debug behaviour
-# 42-experimental
+# Patches to fix upstream release files
+60-set-FULL-VERSION
+62-gen-missing-files-from-upstream
+
+######################################################################
+# Patch for gcc 14
+64-amanda-c99

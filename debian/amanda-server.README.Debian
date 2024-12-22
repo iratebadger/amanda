@@ -44,6 +44,18 @@ do to configure your server.  For a simple setup, as root you need to:
 
 	crontab -u backup /usr/share/doc/amanda-server/examples/crontab.amanda
 
+7. As root do:
+
+        mkdir ~backup/.ssh
+        chown backup: ~backup/.ssh
+        sudo -u backup ssh-keygen -f ~backup/.ssh/id_rsa_amanda
+
+    Do not setup a password for the ssh keys
+
+    Please see /usr/share/doc/amanda-client/README.Debian for more
+    details.
+
+
 NOTE:  If you want to backup your server too, you need to treat it as both a
 client *and* a server, see /usr/share/doc/amanda-client/README.Debian for 
 more information.
@@ -52,15 +64,6 @@ For more complex setups, consult the manpages and the extra documents and
 example files in /usr/share/doc/amanda-common, or look at www.amanda.org on
 the web.
 
-Setup server for backups using ssh transport.
-
-  As root do:
-
-mkdir ~backup/.ssh
-chown backup: ~backup/.ssh
-sudo -u backup ssh-keygen -f ~backup/.ssh/id_rsa_amanda
-
-  Do not setup a password for the ssh keys
 
   Now put the ~backup/.ssh/id_rsa_amanda.pub on the clients in
   authorized_keys, but with some extra security.  Add to the beginning
@@ -225,4 +228,4 @@ This information from Marc Schaefer may relevant:
 >	- ignore those messages in your logcheck.
 
 
- -- Jose M Calhariz <calhariz@debian.org>, Sun, 22 Aug 2021 16:07:05 +0100
+ -- Jose M Calhariz <calhariz@debian.org>, Fri,  3 Sep 2021 15:25:40 +0100

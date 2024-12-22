@@ -5,3 +5,4 @@ example/chg-scsi.conf
 example/disklist
 example/inetd.conf.amandaserver
 example/xinetd.amandaserver
+example/quick/

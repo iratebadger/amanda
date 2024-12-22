@@ -1,0 +1,72 @@
+Author: Robbie Harwood <rharwood@club.cc.cmu.edu>
+Description: Avoid using build-time shell in built scripts for reproducibility
+Index: amanda.git/amplot/amplot.sh
+===================================================================
+--- amanda.git.orig/amplot/amplot.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/amplot/amplot.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#!@SHELL@
++#!/bin/sh
+ # Amanda, The Advanced Maryland Automatic Network Disk Archiver
+ # Copyright (c) 1992-1998 University of Maryland at College Park
+ # Copyright (c) 2007-2012 Zmanda, Inc.  All Rights Reserved.
+Index: amanda.git/client-src/patch-system.sh
+===================================================================
+--- amanda.git.orig/client-src/patch-system.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/client-src/patch-system.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#! @SHELL@
++#!/bin/sh
+ #
+ # patch inetd.conf and services
+ # originally by Axel Zinser (fifi@hiss.han.de)
+Index: amanda.git/common-src/amaespipe.sh
+===================================================================
+--- amanda.git.orig/common-src/amaespipe.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/common-src/amaespipe.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#! @SHELL@
++#!/bin/sh
+ #
+ # Copyright (c) 2007-2012 Zmanda Inc.  All Rights Reserved.
+ # 
+Index: amanda.git/common-src/amcrypt-ossl-asym.sh
+===================================================================
+--- amanda.git.orig/common-src/amcrypt-ossl-asym.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/common-src/amcrypt-ossl-asym.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#!@SHELL@
++#!/bin/sh
+ #
+ # This program is free software; you can redistribute it and/or
+ # modify it under the terms of the GNU General Public License
+Index: amanda.git/common-src/amcrypt-ossl.sh
+===================================================================
+--- amanda.git.orig/common-src/amcrypt-ossl.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/common-src/amcrypt-ossl.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#!@SHELL@
++#!/bin/sh
+ #
+ # This program is free software; you can redistribute it and/or
+ # modify it under the terms of the GNU General Public License
+Index: amanda.git/common-src/amcrypt.sh
+===================================================================
+--- amanda.git.orig/common-src/amcrypt.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/common-src/amcrypt.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#!@SHELL@
++#!/bin/sh
+ #
+ # Original wrapper by Paul Bijnens
+ #
+Index: amanda.git/server-src/amcheckdb.sh
+===================================================================
+--- amanda.git.orig/server-src/amcheckdb.sh	2017-01-15 19:35:08.323368174 +0000
++++ amanda.git/server-src/amcheckdb.sh	2017-01-15 19:35:08.319368169 +0000
+@@ -1,4 +1,4 @@
+-#! @SHELL@
++#!/bin/sh
+ #
+ # check tapelist against database and vice versa
+ #

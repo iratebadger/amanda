@@ -2,18 +2,17 @@ Source: amanda
 Section: utils
 Priority: optional
 Maintainer: Jose M Calhariz <calhariz@debian.org>
-Build-Depends: autotools-dev,
+Build-Depends: yacc,
                bsd-mailx | mailx,
                curl,
                debhelper (>= 10~),
-               dh-autoreconf,
                dump [linux-any],
                flex,
                gawk,
-               gnuplot,
+               gnuplot-nox | gnuplot,
                libcurl4-openssl-dev,
                libglib2.0-dev,
-               libncurses5-dev,
+               libncurses-dev | libncurses5-dev,
                libkrb5-dev,
                libreadline-dev,
                libssl-dev,
@@ -28,6 +27,7 @@ Build-Depends: autotools-dev,
                smbclient,
                swig,
                xfsdump [linux-any],
+Rules-Requires-Root: binary-targets
 Standards-Version: 4.0.1
 Homepage: http://www.amanda.org/
 Vcs-Git: https://salsa.debian.org/debian/amanda.git

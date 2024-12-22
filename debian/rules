@@ -39,7 +39,11 @@ confflags = --prefix=/usr \
 		--enable-s3-device
 
 %:
-	dh $@ --with autoreconf --parallel
+	dh $@ --with autoreconf
+
+override_dh_autoreconf:
+	sh ./config/gen-file-lists
+	dh_autoreconf
 
 override_dh_auto_configure:
 	# MAILER: Fix for #296022, #475771 and #990080
@@ -47,7 +51,8 @@ override_dh_auto_configure:
 
 override_dh_install:
 	sed -i "/dependency_libs/ s/'.*'/''/" `find debian/tmp -name '*.la'`
-	dh_install --list-missing
+	dh_install
+	dh_missing --list-missing
 	cp example/xinetd.amandaserver $(com)/etc/xinetd.d/amanda
 	# Temporary fix for #939411.
 	cat debian/amanda-security.conf > $(cli)/etc/amanda-security.conf
