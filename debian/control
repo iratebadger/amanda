@@ -38,8 +38,7 @@ Architecture: any
 Depends: adduser,
          bsd-mailx | mailx,
          debconf | debconf-2.0,
-         openbsd-inetd | inet-superserver,
-         update-inetd,
+         xinetd
          libjson-perl,
          libencode-locale-perl,
          libdbi-perl,

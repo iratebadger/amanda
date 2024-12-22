@@ -1,4 +1,11 @@
-amanda (1:4.0.0-masterubuntu1) UNRELEASED; urgency=medium
+amanda (1:4.0.0-2) unstable; urgency=medium
+
+  * Chagned deps to use xinetd
+  * 
+
+ -- Michael C. McMinn <mmcminn@uniondynamic.com>  Sun, 03 Oct 2021 00:49:04 -0400
+
+amanda (1:4.0.0-1) unstable; urgency=medium
 
   * Pulling the debian packaging over to master.
   * Removed unneeded patches, merged useful ones, kept deb specific stuff as patches. 
