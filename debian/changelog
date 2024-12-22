@@ -1,7 +1,7 @@
 amanda (1:4.0.0-2) unstable; urgency=medium
 
   * Chagned deps to use xinetd
-  * 
+  * Merged upstream
 
  -- Michael C. McMinn <mmcminn@uniondynamic.com>  Sun, 03 Oct 2021 00:49:04 -0400
 
