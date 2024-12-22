@@ -1,6 +1,6 @@
 EXTRA_DIST = \
 	common \
-	deb \
+	debian \
 	rpm \
 	sun-pkg \
 	Makefile.am \
